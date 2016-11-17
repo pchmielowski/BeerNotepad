@@ -1,5 +1,8 @@
 # BeerNotepad
 
+A simple Android application to keep information and rating of tasted beers.
+Allows user to create an account, log in and keep all information in a cloud service.
+
 ## Used technologies
 
 * **Firebase** as a user login service and a database
