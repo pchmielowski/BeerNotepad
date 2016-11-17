@@ -2,6 +2,8 @@ package net.chmielowski.beer.model;
 
 import net.chmielowski.beer.ui.beers.BeerView;
 
+import java.util.Comparator;
+
 import lombok.EqualsAndHashCode;
 
 import static java.lang.Math.abs;
@@ -26,27 +28,34 @@ public final class Beer {
         return view; // TODO: why is it returning?
     }
 
-    int compareByCountry(final Beer second) {
-        return new Normalized(this.mCountry.compareTo(second.mCountry)).value();
-    }
+    public static final class CompareByCountry implements Comparator<Beer> {
+        @Override
+        public int compare(final Beer first, final Beer second) {
+            return new Normalized(first.mCountry.compareTo(second.mCountry))
+                    .value();
 
-    int compareByRating(final Beer second) {
-        return Float.compare(this.mRating, second.mRating);
-
-    }
-
-    static class Normalized {
-        private final int mValue;
-
-        Normalized(final int value) {
-            mValue = value;
         }
 
-        int value() {
-            if (mValue == 0) {
-                return 0;
+        static class Normalized {
+            private final int mValue;
+
+            Normalized(final int value) {
+                mValue = value;
             }
-            return mValue / abs(mValue);
+
+            int value() {
+                if (mValue == 0) {
+                    return 0;
+                }
+                return mValue / abs(mValue);
+            }
+        }
+    }
+
+    public static final class CompareByRating implements Comparator<Beer> {
+        @Override
+        public int compare(final Beer first, final Beer second) {
+            return Float.compare(first.mRating, second.mRating);
         }
     }
 }

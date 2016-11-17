@@ -31,16 +31,25 @@ public final class BeerTest {
     @Test
     public void compares_by_country() throws Exception {
         final String lower = "Austria";
-        final String higher = "Czechyyy";
+        final String higher = "Czechy";
 
-        final int resultLower = new Beer(name, lower, style, rating)
-                .compareByCountry(new Beer(name, higher, style, rating));
+        final int resultLower =
+                new Beer.CompareByCountry().compare(
+                        new Beer(name, lower, style, rating),
+                        new Beer(name, higher, style, rating)
+                );
 
-        final int resultTheSame = new Beer(name, lower, style, rating)
-                .compareByCountry(new Beer(name, lower, style, rating));
+        final int resultTheSame =
+                new Beer.CompareByCountry().compare(
+                        new Beer(name, lower, style, rating),
+                        new Beer(name, lower, style, rating)
+                );
 
-        final int resultHigher = new Beer(name, higher, style, rating)
-                .compareByCountry(new Beer(name, lower, style, rating));
+        final int resultHigher =
+                new Beer.CompareByCountry().compare(
+                        new Beer(name, higher, style, rating),
+                        new Beer(name, lower, style, rating)
+                );
 
         assertThat(resultLower, is(-1));
         assertThat(resultTheSame, is(0));
@@ -51,14 +60,24 @@ public final class BeerTest {
     public void compares_by_rating() throws Exception {
         final float lower = 0.1f;
         final float higher = 4.5f;
-        final int resultLower = new Beer(name, country, style, lower)
-                .compareByRating(new Beer(name, country, style, higher));
 
-        final int resultTheSame = new Beer(name, country, style, lower)
-                .compareByRating(new Beer(name, country, style, lower));
+        final int resultLower =
+                new Beer.CompareByRating().compare(
+                        new Beer(name, country, style, lower),
+                        new Beer(name, country, style, higher)
+                );
 
-        final int resultHigher = new Beer(name, country, style, higher)
-                .compareByRating(new Beer(name, country, style, lower));
+        final int resultTheSame =
+                new Beer.CompareByRating().compare(
+                        new Beer(name, country, style, lower),
+                        new Beer(name, country, style, lower)
+                );
+
+        final int resultHigher =
+                new Beer.CompareByRating().compare(
+                        new Beer(name, country, style, higher),
+                        new Beer(name, country, style, lower)
+                );
 
         assertThat(resultLower, is(-1));
         assertThat(resultTheSame, is(0));
