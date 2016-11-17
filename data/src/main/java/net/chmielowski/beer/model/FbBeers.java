@@ -1,0 +1,74 @@
+package net.chmielowski.beer.model;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.kelvinapps.rxfirebase.RxFirebaseDatabase;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import rx.Observable;
+import rx.functions.Func1;
+import rx.subjects.ReplaySubject;
+
+public final class FbBeers implements Beers {
+
+    private final DatabaseReference mDatabase;
+
+    public FbBeers(final FirebaseDatabase database) {
+        mDatabase = database.getReference();
+    }
+
+    @Override
+    public Observable<List<Beer>> list() {
+        return RxFirebaseDatabase.observeSingleValueEvent(mDatabase)
+                                 .flatMap(new SnapshotToListObservable());
+    }
+
+    @Override
+    public void add(final String name, final String country, final String style,
+            final float rating) {
+        final StructBeer beer = new StructBeer();
+        beer.mName = name;
+        beer.mCountry = country;
+        beer.mStyle = style;
+        beer.mRating = rating;
+        mDatabase.push().setValue(beer);
+    }
+
+    private static class SnapshotToListObservable
+            implements Func1<DataSnapshot, Observable<List<Beer>>> {
+        @Override
+        public Observable<List<Beer>> call(final DataSnapshot snapshot) {
+            ReplaySubject<Iterable<DataSnapshot>> subject =
+                    ReplaySubject.create();
+            subject.onNext(snapshot.getChildren());
+            return subject.map(new IterableToList());
+        }
+
+    }
+
+    static class IterableToList
+            implements Func1<Iterable<DataSnapshot>, List<Beer>> {
+        @Override
+        public List<Beer> call(final Iterable<DataSnapshot> dataSnapshots) {
+            List<Beer> beers = new LinkedList<Beer>();
+            for (DataSnapshot s : dataSnapshots) {
+                final StructBeer beer = s.getValue(StructBeer.class);
+                beers.add(new Beer(beer.mName, beer.mCountry, beer.mStyle,
+                                   beer.mRating
+                ));
+            }
+            return beers;
+        }
+
+    }
+
+    static final class StructBeer {
+        String mName;
+        String mCountry;
+        String mStyle;
+        float mRating;
+    }
+}
