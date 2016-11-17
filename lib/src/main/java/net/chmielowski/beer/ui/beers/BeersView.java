@@ -9,6 +9,8 @@ import rx.Observable;
 interface BeersView {
     Observable<Integer> sortingMethodNumber();
 
+    Observable<Boolean> sortingAscending();
+
     Observable fabClicked();
 
     void add(List<Beer> beers);

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
@@ -17,6 +18,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
+import rx.functions.Func1;
+import rx.subjects.BehaviorSubject;
 
 final class BasicBeersView implements BeersView {
 
@@ -27,6 +30,8 @@ final class BasicBeersView implements BeersView {
     FloatingActionButton mAddNew;
     @BindView(R.id.beers_sp_sort)
     Spinner mSortBySpinner;
+    @BindView(R.id.beers_switch_sort)
+    Switch mSortOrderSwitch;
 
     BasicBeersView(final BeersActivity activity) {
         this.mActivity = activity;
@@ -38,6 +43,21 @@ final class BasicBeersView implements BeersView {
     @Override
     public Observable<Integer> sortingMethodNumber() {
         return RxAdapterView.itemSelections(mSortBySpinner);
+    }
+
+    @Override
+    public Observable<Boolean> sortingAscending() {
+        BehaviorSubject<Boolean> subject = BehaviorSubject.create(true);
+        RxView.clicks(mSortOrderSwitch).map(
+                new Func1<Void, Boolean>() {
+                    @Override
+                    public Boolean call(final Void aVoid) {
+                        return mSortOrderSwitch.isChecked();
+                    }
+                })
+              .subscribe(subject);
+        return subject.asObservable();
+
     }
 
     @Override

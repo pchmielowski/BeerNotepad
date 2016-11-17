@@ -30,11 +30,11 @@ public class BeersPresenterTest {
     Beers mockedBeers;
     private List<Beer> beers;
 
-    private static Observable<List<Beer>> noCompletingJust(
-            final List<Beer> twoBeers) {
-        Subject<List<Beer>, List<Beer>> twoBeersSource = ReplaySubject.create();
-        twoBeersSource.onNext(twoBeers);
-        return twoBeersSource.<List<Beer>>asObservable();
+    private static <T> Observable<T> noCompletingJust(
+            final T value) {
+        Subject<T, T> subject = ReplaySubject.create();
+        subject.onNext(value);
+        return subject.<T>asObservable();
     }
 
     private static ReplaySubject<Integer> nonCompletingFrom(
@@ -71,6 +71,8 @@ public class BeersPresenterTest {
                 Observable.<List<Beer>>never());
         Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
                 Observable.<Integer>never());
+        Mockito.when(mockedView.sortingAscending()).thenReturn(
+                noCompletingJust(true));
 
         new BeersPresenter(mockedView, mockedBeers);
 
@@ -83,6 +85,8 @@ public class BeersPresenterTest {
                 Observable.<List<Beer>>never());
         Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
                 Observable.just(1));
+        Mockito.when(mockedView.sortingAscending()).thenReturn(
+                noCompletingJust(true));
 
         new BeersPresenter(mockedView, mockedBeers);
 
@@ -95,6 +99,8 @@ public class BeersPresenterTest {
                .thenReturn(Observable.just(beers));
         Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
                 Observable.<Integer>never());
+        Mockito.when(mockedView.sortingAscending()).thenReturn(
+                noCompletingJust(true));
 
         new BeersPresenter(mockedView, mockedBeers);
         verifyInteractionsWithViewOnlyDuringSetup();
@@ -106,6 +112,8 @@ public class BeersPresenterTest {
                .thenReturn(noCompletingJust(beers));
         Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
                 Observable.just(0));
+        Mockito.when(mockedView.sortingAscending()).thenReturn(
+                noCompletingJust(true));
 
         new BeersPresenter(mockedView, mockedBeers);
 
@@ -121,6 +129,8 @@ public class BeersPresenterTest {
         final List<Integer> sortingMethods = Arrays.asList(0, 1, 0);
         Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
                 nonCompletingFrom(sortingMethods));
+        Mockito.when(mockedView.sortingAscending()).thenReturn(
+                noCompletingJust(true));
 
         new BeersPresenter(mockedView, mockedBeers);
 
