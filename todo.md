@@ -1,0 +1,8 @@
+- [ ] User private data in DB
+- [ ] Better sorting criterias
+- [ ] Register page
+- [ ] Facebook login
+- [ ] Better look
+- [ ] Google Play
+- [ ] Video + screenshots
+- [ ] Logo
