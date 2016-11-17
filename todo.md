@@ -1,4 +1,4 @@
-- [ ] User private data in DB
+- [x] User private data in DB
 - [ ] Better sorting criterias
 - [ ] Register page
 - [ ] Facebook login

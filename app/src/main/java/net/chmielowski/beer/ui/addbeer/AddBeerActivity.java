@@ -3,24 +3,31 @@ package net.chmielowski.beer.ui.addbeer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.google.firebase.database.FirebaseDatabase;
-
+import net.chmielowski.beer.BeerApplication;
 import net.chmielowski.beer.R;
-import net.chmielowski.beer.model.FbBeers;
+import net.chmielowski.beer.model.Beers;
+
+import javax.inject.Inject;
 
 public final class AddBeerActivity extends AppCompatActivity {
+    @Inject
+    Beers mBeers;
+
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
-        new AddBeerPresenter(new BasicAddBeerView(this),
-                             new FbBeers(FirebaseDatabase.getInstance()),
-                             new Finishable() {
-                                 @Override
-                                 public void finish() {
-                                     finish();
-                                 }
-                             });
+        ((BeerApplication) getApplication()).cachedComponent().inject(this);
+        new AddBeerPresenter(
+                new BasicAddBeerView(this),
+                mBeers,
+                new Finishable() {
+                    @Override
+                    public void finish() {
+                        finish();
+                    }
+                }
+        );
     }
 
 }

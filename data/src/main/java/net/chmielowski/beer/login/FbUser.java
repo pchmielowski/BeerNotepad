@@ -19,6 +19,11 @@ public final class FbUser implements User {
     }
 
     @Override
+    public String uid() {
+        return mAuth.getCurrentUser().getUid();
+    }
+
+    @Override
     public Observable<Boolean> login(final String name, final String passwd) {
         final PublishSubject<Boolean> status = PublishSubject.create();
         mAuth.signInWithEmailAndPassword(name, passwd).addOnCompleteListener(

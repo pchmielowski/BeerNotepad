@@ -30,8 +30,11 @@ public final class DgModule {
 
     @Singleton// TODO: check if is necessary
     @Provides
-    Beers provideFireBaseBeers(final FirebaseAuth auth) {
-        return new FbBeers(FirebaseDatabase.getInstance());
+    Beers provideFireBaseBeers(final User user) {
+        return new FbBeers(
+                FirebaseDatabase.getInstance()
+                                .getReference()
+                                .child(user.uid()));
     }
 
 }

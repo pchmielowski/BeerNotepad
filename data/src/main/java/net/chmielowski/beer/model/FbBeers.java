@@ -2,7 +2,6 @@ package net.chmielowski.beer.model;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.kelvinapps.rxfirebase.RxFirebaseDatabase;
 
 import java.util.LinkedList;
@@ -16,8 +15,8 @@ public final class FbBeers implements Beers {
 
     private final DatabaseReference mDatabase;
 
-    public FbBeers(final FirebaseDatabase database) {
-        mDatabase = database.getReference();
+    public FbBeers(final DatabaseReference ref) {
+        mDatabase = ref;
     }
 
     @Override
