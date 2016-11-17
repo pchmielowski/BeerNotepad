@@ -19,7 +19,7 @@ allprojects {
 
     task checkstyle(type: Checkstyle) {
         showViolations = true
-        configFile file("/home/piotrek/.AndroidStudio2.2/config/plugins/CheckStyle-IDEA/classes/sun_checks.xml")
+        configFile file("checkstyle.xml")
         source 'src/main/java'
         include '**/*.java'
         exclude '**/gen/**'
