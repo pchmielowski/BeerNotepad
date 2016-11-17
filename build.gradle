@@ -19,7 +19,7 @@ allprojects {
 
     task checkstyle(type: Checkstyle) {
         showViolations = true
-        configFile file("checkstyle.xml")
+        configFile file("../checkstyle.xml")
         source 'src/main/java'
         include '**/*.java'
         exclude '**/gen/**'
