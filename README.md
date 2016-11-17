@@ -10,6 +10,7 @@ Allows user to create an account, log in and keep all information in a cloud ser
 * **Mockito**, **JUnit** and **Espresso** for tests (unit and instrumentation)
 * **Butterknife** for view injections
 * **RxJava** for reactive design
+* **Checkstyle** for static code quality analysis
 
 ## Modules
 
