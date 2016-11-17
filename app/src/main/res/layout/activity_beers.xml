@@ -27,7 +27,20 @@
         android:layout_marginTop="16dp"
         android:entries="@array/sortBy"
         android:prompt="@string/sort"
-        app:layout_constraintLeft_toLeftOf="@id/beers_tv_sort"
+        app:layout_constraintLeft_toRightOf="@id/beers_tv_sort"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Switch
+        android:id="@+id/beers_switch_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:checked="true"
+        android:text="@string/ascending"
+        app:layout_constraintLeft_toRightOf="@id/beers_sp_sort"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
