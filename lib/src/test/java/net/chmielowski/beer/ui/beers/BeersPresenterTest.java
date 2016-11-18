@@ -68,7 +68,10 @@ public class BeersPresenterTest {
     }
 
     private BeersPresenter createBeersPresenter() {
-        return new BeersPresenter(mockedView, mockedBeers);
+        return new BeersPresenter(mockedView, new ChangeDataObserverAction(
+                mockedBeers.list(),
+                new ShowBeersAction(mockedView)
+        ));
     }
 
     @Test
