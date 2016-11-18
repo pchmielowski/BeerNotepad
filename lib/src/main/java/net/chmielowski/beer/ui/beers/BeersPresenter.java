@@ -12,6 +12,7 @@ final class BeersPresenter {
     BeersPresenter(final BeersView view,
             final Action1<Func1<List<Beer>, List<Beer>>> action) {
         view.showLoading(true);
+        view.sortingAscending();
         view.sortingMethodNumber()
             .map(new MethodNumberToSortingFunction())
             .subscribe(action);

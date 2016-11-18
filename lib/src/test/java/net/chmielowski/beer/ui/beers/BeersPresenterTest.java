@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Arrays;
@@ -82,22 +81,7 @@ public class BeersPresenterTest {
         ));
     }
 
-    // TODO: 3 legacy tests - refactor or remove
-    @Test
-    public void no_data_sorting_method_changes() {
-        when(mockedBeers.list()).thenReturn(
-                Observable.<List<Beer>>never());
-        when(mockedView.sortingMethodNumber()).thenReturn(
-                Observable.just(1));
-//        Mockito.when(mockedView.sortingAscending()).thenReturn(
-//                nonCompletingJust(true));
-
-        createBeersPresenter();
-
-        verifyInteractionsWithViewOnlyDuringSetup();
-    }
-
-
+    // TODO: 2 legacy tests - refactor or remove
     @Test
     @SuppressWarnings("unchecked")
     public void list_of_few_beers_sorting_method_change_once() {
@@ -150,11 +134,5 @@ public class BeersPresenterTest {
                 new SortBeerFunction(new Beer.CompareByRating(true)));
         order.verify(mockedAction, times(1)).call(
                 new SortBeerFunction(new Beer.CompareByCountry(true)));
-    }
-
-    private void verifyInteractionsWithViewOnlyDuringSetup() {
-        verify(mockedView, times(1)).showLoading(true);
-        verify(mockedView, times(1)).sortingMethodNumber();
-        Mockito.verifyNoMoreInteractions(mockedView);
     }
 }
