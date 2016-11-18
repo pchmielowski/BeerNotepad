@@ -3,7 +3,6 @@ package net.chmielowski.beer.ui.beers;
 import net.chmielowski.beer.model.Beer;
 import net.chmielowski.beer.model.Beers;
 
-import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +17,10 @@ import rx.Observable;
 import rx.subjects.ReplaySubject;
 import rx.subjects.Subject;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,7 +32,7 @@ public class BeersPresenterTest {
     Beers mockedBeers;
     private List<Beer> beers;
 
-    private static <T> Observable<T> noCompletingJust(
+    private static <T> Observable<T> nonCompletingJust(
             final T value) {
         Subject<T, T> subject = ReplaySubject.create();
         subject.onNext(value);
@@ -65,83 +67,60 @@ public class BeersPresenterTest {
         );
     }
 
-    @Test
-    public void no_data_no_sorting_method_changes() {
-        Mockito.when(mockedBeers.list()).thenReturn(
-                Observable.<List<Beer>>never());
-        Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
-                Observable.<Integer>never());
-        Mockito.when(mockedView.sortingAscending()).thenReturn(
-                noCompletingJust(true));
-
-        new BeersPresenter(mockedView, mockedBeers);
-
-        verifyInteractionsWithViewOnlyDuringSetup();
+    private BeersPresenter createBeersPresenter() {
+        return new BeersPresenter(mockedView, mockedBeers);
     }
 
     @Test
     public void no_data_sorting_method_changes() {
-        Mockito.when(mockedBeers.list()).thenReturn(
+        when(mockedBeers.list()).thenReturn(
                 Observable.<List<Beer>>never());
-        Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
+        when(mockedView.sortingMethodNumber()).thenReturn(
                 Observable.just(1));
-        Mockito.when(mockedView.sortingAscending()).thenReturn(
-                noCompletingJust(true));
+//        Mockito.when(mockedView.sortingAscending()).thenReturn(
+//                nonCompletingJust(true));
 
-        new BeersPresenter(mockedView, mockedBeers);
+        createBeersPresenter();
 
         verifyInteractionsWithViewOnlyDuringSetup();
     }
 
     @Test
-    public void list_of_few_beers() {
-        Mockito.when(mockedBeers.list())
-               .thenReturn(Observable.just(beers));
-        Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
-                Observable.<Integer>never());
-        Mockito.when(mockedView.sortingAscending()).thenReturn(
-                noCompletingJust(true));
-
-        new BeersPresenter(mockedView, mockedBeers);
-        verifyInteractionsWithViewOnlyDuringSetup();
-    }
-
-    @Test
+    @SuppressWarnings("unchecked")
     public void list_of_few_beers_sorting_method_change_once() {
-        Mockito.when(mockedBeers.list())
-               .thenReturn(noCompletingJust(beers));
-        Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
+        when(mockedBeers.list())
+                .thenReturn(nonCompletingJust(beers));
+        when(mockedView.sortingMethodNumber()).thenReturn(
                 Observable.just(0));
-        Mockito.when(mockedView.sortingAscending()).thenReturn(
-                noCompletingJust(true));
+//        Mockito.when(mockedView.sortingAscending()).thenReturn(
+//                nonCompletingJust(true));
 
-        new BeersPresenter(mockedView, mockedBeers);
+        createBeersPresenter();
 
-        Mockito.verify(mockedView, times(1))
-               .add((List<Beer>) argThat(
-                       IsCollectionWithSize.hasSize(beers.size())));
+        verify(mockedView, times(1))
+                .add((List<Beer>) argThat(hasSize(this.beers.size())));
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void list_of_few_beers_sorting_method_change_few_times() {
-        Mockito.when(mockedBeers.list())
-               .thenReturn(noCompletingJust(beers));
+        when(mockedBeers.list())
+                .thenReturn(nonCompletingJust(beers));
         final List<Integer> sortingMethods = Arrays.asList(0, 1, 0);
-        Mockito.when(mockedView.sortingMethodNumber()).thenReturn(
+        when(mockedView.sortingMethodNumber()).thenReturn(
                 nonCompletingFrom(sortingMethods));
-        Mockito.when(mockedView.sortingAscending()).thenReturn(
-                noCompletingJust(true));
+//        Mockito.when(mockedView.sortingAscending()).thenReturn(
+//                nonCompletingJust(true));
 
-        new BeersPresenter(mockedView, mockedBeers);
+        createBeersPresenter();
 
-        Mockito.verify(mockedView, times(sortingMethods.size()))
-               .add((List<Beer>) argThat(
-                       IsCollectionWithSize.hasSize(beers.size())));
+        verify(mockedView, times(sortingMethods.size()))
+                .add((List<Beer>) argThat(hasSize(beers.size())));
     }
 
     private void verifyInteractionsWithViewOnlyDuringSetup() {
-        Mockito.verify(mockedView, times(1)).showLoading(true);
-        Mockito.verify(mockedView, times(1)).sortingMethodNumber();
+        verify(mockedView, times(1)).showLoading(true);
+        verify(mockedView, times(1)).sortingMethodNumber();
         Mockito.verifyNoMoreInteractions(mockedView);
     }
 }
