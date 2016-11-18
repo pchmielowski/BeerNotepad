@@ -29,7 +29,7 @@ public final class BeerTest {
     }
 
     @Test
-    public void compares_by_country() throws Exception {
+    public void compares_by_country_ascending() {
         final String lower = "Austria";
         final String higher = "Czechy";
 
@@ -59,7 +59,37 @@ public final class BeerTest {
     }
 
     @Test
-    public void compares_by_rating() throws Exception {
+    public void compares_by_country_descending() {
+        final String lower = "Austria";
+        final String higher = "Czechy";
+
+        final Beer.CompareByCountry rule =
+                new Beer.CompareByCountry(false);
+        final int resultLower =
+                rule.compare(
+                        new Beer(name, higher, style, rating),
+                        new Beer(name, lower, style, rating)
+                );
+
+        final int resultTheSame =
+                rule.compare(
+                        new Beer(name, lower, style, rating),
+                        new Beer(name, lower, style, rating)
+                );
+
+        final int resultHigher =
+                rule.compare(
+                        new Beer(name, lower, style, rating),
+                        new Beer(name, higher, style, rating)
+                );
+
+        assertThat(resultLower, is(-1));
+        assertThat(resultTheSame, is(0));
+        assertThat(resultHigher, is(1));
+    }
+
+    @Test
+    public void compares_by_rating_ascending() {
         final float lower = 0.1f;
         final float higher = 4.5f;
 
@@ -80,6 +110,35 @@ public final class BeerTest {
                 rule.compare(
                         new Beer(name, country, style, higher),
                         new Beer(name, country, style, lower)
+                );
+
+        assertThat(resultLower, is(-1));
+        assertThat(resultTheSame, is(0));
+        assertThat(resultHigher, is(1));
+    }
+
+    @Test
+    public void compares_by_rating_descending() {
+        final float lower = 0.1f;
+        final float higher = 4.5f;
+
+        final Beer.CompareByRating rule = new Beer.CompareByRating(false);
+        final int resultLower =
+                rule.compare(
+                        new Beer(name, country, style, higher),
+                        new Beer(name, country, style, lower)
+                );
+
+        final int resultTheSame =
+                rule.compare(
+                        new Beer(name, country, style, lower),
+                        new Beer(name, country, style, lower)
+                );
+
+        final int resultHigher =
+                rule.compare(
+                        new Beer(name, country, style, lower),
+                        new Beer(name, country, style, higher)
                 );
 
         assertThat(resultLower, is(-1));
