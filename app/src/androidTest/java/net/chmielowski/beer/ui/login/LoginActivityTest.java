@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.assertion.ViewAssertions
@@ -95,6 +96,19 @@ public final class LoginActivityTest {
                 .perform(click());
 
         onView(withId(R.id.register_et_email))
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void opensRegistrationFormAndGoesBack() {
+        mActivityTestRule.launchActivity(new Intent());
+
+        onView(withId(R.id.login_tv_register))
+                .perform(click());
+
+        pressBack();
+
+        onView(withId(R.id.login_et_email))
                 .check(matches(isDisplayed()));
     }
 

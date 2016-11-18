@@ -94,6 +94,5 @@ final class BasicLoginView implements LoginView {
                 mActivity.getApplicationContext(),
                 RegisterActivity.class
         ));
-        mActivity.finish();
     }
 }
