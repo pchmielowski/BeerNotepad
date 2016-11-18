@@ -53,7 +53,7 @@ public final class BeersActivityTest {
     }
 
     @Test
-    public void sortedByRating() {
+    public void sorted_by_rating_ascending() {
         ReplaySubject<List<Beer>> subject = ReplaySubject.create();
         subject.onNext(Arrays.asList(
                 new Beer("bbb", "c1", "s1", 0.0f),
@@ -69,7 +69,7 @@ public final class BeersActivityTest {
     }
 
     @Test
-    public void sortedByCountry() {
+    public void sorted_by_country_descending() {
         ReplaySubject<List<Beer>> subject = ReplaySubject.create();
         subject.onNext(Arrays.asList(
                 new Beer("from bbb", "Czechy", "s1", 0.0f),
@@ -87,6 +87,29 @@ public final class BeersActivityTest {
 
         onView(withText("from aaa"))
                 .check(isAbove(withText("from bbb")));
+    }
+
+    @Test
+    public void sorted_by_country_order_change() {
+        ReplaySubject<List<Beer>> subject = ReplaySubject.create();
+        subject.onNext(Arrays.asList(
+                new Beer("from bbb", "Czechy", "s1", 0.0f),
+                new Beer("from aaa", "Austria", "s2", 1.0f)
+        ));
+        Mockito.when(mockedBeers.list())
+               .thenReturn(subject);
+
+        mActivityTestRule.launchActivity(new Intent());
+
+        onView(withId(R.id.beers_sp_sort))
+                .perform(click());
+        onView(withText("Country"))
+                .perform(click());
+        onView(withId(R.id.beers_switch_sort))
+                .perform(click());
+
+        onView(withText("from bbb"))
+                .check(isAbove(withText("from aaa")));
     }
 
 }
