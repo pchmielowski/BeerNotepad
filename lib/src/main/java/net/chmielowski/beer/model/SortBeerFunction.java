@@ -4,8 +4,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import lombok.EqualsAndHashCode;
 import rx.functions.Func1;
 
+@EqualsAndHashCode
 public final class SortBeerFunction implements Func1<List<Beer>, List<Beer>> {
 
     private final Comparator<Beer> mRule;

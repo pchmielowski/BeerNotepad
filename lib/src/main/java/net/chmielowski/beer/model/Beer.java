@@ -28,6 +28,7 @@ public final class Beer {
         return view; // TODO: why is it returning?
     }
 
+    @EqualsAndHashCode
     public static final class CompareByCountry implements Comparator<Beer> {
         @Override
         public int compare(final Beer first, final Beer second) {
@@ -52,6 +53,7 @@ public final class Beer {
         }
     }
 
+    @EqualsAndHashCode
     public static final class CompareByRating implements Comparator<Beer> {
         @Override
         public int compare(final Beer first, final Beer second) {

@@ -9,7 +9,7 @@ import rx.Subscription;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-class ChangeDataObserverAction
+final class ChangeDataObserverAction
         implements Action1<Func1<List<Beer>, List<Beer>>> {
     private final Observable<List<Beer>> mBeersDataSource;
     private final ShowBeersAction mShowBeersAction; // TODO: just Action1
