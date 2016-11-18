@@ -26,15 +26,17 @@ import javax.inject.Inject;
 import rx.subjects.ReplaySubject;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.PositionAssertions
         .isAbove;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
 public final class BeersActivityTest {
-
 
     @Rule
     public ActivityTestRule<BeersActivity> mActivityTestRule =
@@ -112,4 +114,27 @@ public final class BeersActivityTest {
                 .check(isAbove(withText("from aaa")));
     }
 
+    @Test
+    public void starts_add_beer_activity() {
+        mActivityTestRule.launchActivity(new Intent());
+
+        onView(withId(R.id.beers_fab_add))
+                .perform(click());
+
+        onView(withId(R.id.add_et_country))
+                .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void starts_add_beer_activity_and_goes_back() {
+        mActivityTestRule.launchActivity(new Intent());
+
+        onView(withId(R.id.beers_fab_add))
+                .perform(click());
+
+        pressBack();
+
+        onView(withId(R.id.beers_fab_add))
+                .check(matches(isDisplayed()));
+    }
 }

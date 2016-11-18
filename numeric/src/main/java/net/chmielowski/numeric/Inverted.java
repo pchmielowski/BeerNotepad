@@ -1,6 +1,6 @@
 package net.chmielowski.numeric;
 
-public class Inverted {
+public final class Inverted {
     private final int mValue;
     private final boolean mInvert;
 

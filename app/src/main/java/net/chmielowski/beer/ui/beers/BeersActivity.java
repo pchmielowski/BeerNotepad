@@ -11,6 +11,8 @@ import net.chmielowski.beer.ui.addbeer.AddBeerActivity;
 
 import javax.inject.Inject;
 
+import rx.functions.Action1;
+
 
 public final class BeersActivity extends AppCompatActivity {
 
@@ -32,16 +34,18 @@ public final class BeersActivity extends AppCompatActivity {
         );
         new FabPresenter(
                 view,
-                new StartAddBeerActivity(this)
+                new StartAddBeerActivityAction()
         );
     }
 
-    void startAddBeerActivity() {
-        startActivity(
-                new Intent(
-                        getApplicationContext(),
-                        AddBeerActivity.class
-                ));
+    private class StartAddBeerActivityAction implements Action1<Void> {
+        @Override
+        public void call(final Void aVoid) {
+            startActivity(
+                    new Intent(
+                            getApplicationContext(),
+                            AddBeerActivity.class
+                    ));
+        }
     }
-
 }
