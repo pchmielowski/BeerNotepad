@@ -25,7 +25,10 @@ public final class BeersActivity extends AppCompatActivity {
         final BasicBeersView view = new BasicBeersView(this);
         new BeersPresenter(
                 view,
-                mBeers
+                new ChangeDataObserverAction(
+                        mBeers.list(),
+                        new ShowBeersAction(view)
+                )
         );
         new FabPresenter(
                 view,

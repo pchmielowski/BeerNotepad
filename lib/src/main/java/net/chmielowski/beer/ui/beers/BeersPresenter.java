@@ -1,32 +1,29 @@
 package net.chmielowski.beer.ui.beers;
 
-import net.chmielowski.beer.model.Beer;
 import net.chmielowski.beer.model.Beers;
-
-import java.util.List;
-
-import rx.subjects.BehaviorSubject;
-import rx.subjects.Subject;
 
 final class BeersPresenter {
 
+    private final ChangeDataObserverAction mAction;
+
     BeersPresenter(final BeersView view, final Beers beers) {
-        configureShowingBeers(view, beers);
+        this(view, new ChangeDataObserverAction(
+                beers.list(),
+                new ShowBeersAction(view)
+        ));
     }
 
-    private void configureShowingBeers(final BeersView view,
-            final Beers beers) {
-        view.showLoading(true);
-        final Subject<List<Beer>, List<Beer>> dataSource =
-                BehaviorSubject.create();
-        beers.list().subscribe(dataSource);
+    BeersPresenter(final BeersView view,
+            final ChangeDataObserverAction action) {
+        mAction = action;
+        configureShowingBeers(view);
+    }
 
+    private void configureShowingBeers(final BeersView view) {
+        view.showLoading(true);
         view.sortingMethodNumber()
             .map(new MethodNumberToSortingFunction())
-            .subscribe(new ChangeDataObserverAction(
-                    dataSource,
-                    new ShowBeersAction(view)
-            ));
+            .subscribe(mAction);
 
     }
 
