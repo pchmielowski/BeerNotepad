@@ -9,8 +9,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import rx.Observable;
+import rx.functions.Action1;
 import rx.subjects.PublishSubject;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,6 +28,8 @@ public final class LoginPresenterTest {
     LoginView mockedView;
     @Mock
     User mockedUser;
+    @Mock
+    Action1<Void> mockedOnLoginAction;
     private String email = "piotrek@domain.com";
 
     @Before
@@ -37,27 +41,33 @@ public final class LoginPresenterTest {
                 .thenReturn(Observable.just(false));
         when(mockedView.loginButtonClicked()).thenReturn(
                 loginButtonClicked);
+        when(mockedView.registerLinkClicked()).thenReturn(
+                Observable.<Void>never());
     }
 
     @Test
     public void login_ok() throws Exception {
         when(mockedView.password()).thenReturn(correctPassword);
-        new LoginPresenter(mockedView, mockedUser);
+        new LoginPresenter(mockedView, mockedUser,
+                           mockedOnLoginAction
+        );
 
         loginButtonClicked.onNext(null);
 
         verify(mockedView, never()).showError();
-        verify(mockedView).startMainActivity();
+        verify(mockedOnLoginAction).call(null);
     }
 
     @Test
     public void login_failed() throws Exception {
         when(mockedView.password()).thenReturn(wrongPassword);
-        new LoginPresenter(mockedView, mockedUser);
+        new LoginPresenter(mockedView, mockedUser,
+                           mockedOnLoginAction
+        );
 
         loginButtonClicked.onNext(null);
 
-        verify(mockedView, never()).startMainActivity();
+        verify(mockedOnLoginAction, never()).call(any(Void.class));
         verify(mockedView).showError();
     }
 

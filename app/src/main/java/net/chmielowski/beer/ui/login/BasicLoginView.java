@@ -12,7 +12,6 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import net.chmielowski.beer.BuildConfig;
 import net.chmielowski.beer.R;
-import net.chmielowski.beer.ui.beers.BeersActivity;
 import net.chmielowski.beer.ui.regiser.RegisterActivity;
 
 import butterknife.BindString;
@@ -75,19 +74,11 @@ final class BasicLoginView implements LoginView {
     }
 
     @Override
-    public void startMainActivity() {
-        mActivity.startActivity(new Intent(
-                mActivity.getApplicationContext(),
-                BeersActivity.class
-        ));
-        mActivity.finish();
-    }
-
-    @Override
     public void showLoading() {
         mProgress.setVisibility(View.VISIBLE);
     }
 
+    // TODO: do the same what with BeersActivity
     @Override
     public void startRegisterActivity() {
         mActivity.startActivity(new Intent(

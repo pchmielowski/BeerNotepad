@@ -13,8 +13,6 @@ interface LoginView {
 
     void showError();
 
-    void startMainActivity();
-
     void showLoading();
 
     void startRegisterActivity();
