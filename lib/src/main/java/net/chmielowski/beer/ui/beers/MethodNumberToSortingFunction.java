@@ -13,9 +13,9 @@ class MethodNumberToSortingFunction
     public Func1<List<Beer>, List<Beer>> call(final Integer choice) {
         switch (choice) {
             case 0:
-                return new SortBeerFunction(new Beer.CompareByRating());
+                return new SortBeerFunction(new Beer.CompareByRating(true));
             case 1:
-                return new SortBeerFunction(new Beer.CompareByCountry());
+                return new SortBeerFunction(new Beer.CompareByCountry(true));
             default:
                 throw new IllegalStateException();
         }

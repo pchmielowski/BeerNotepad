@@ -33,20 +33,22 @@ public final class BeerTest {
         final String lower = "Austria";
         final String higher = "Czechy";
 
+        final Beer.CompareByCountry rule =
+                new Beer.CompareByCountry(true);
         final int resultLower =
-                new Beer.CompareByCountry().compare(
+                rule.compare(
                         new Beer(name, lower, style, rating),
                         new Beer(name, higher, style, rating)
                 );
 
         final int resultTheSame =
-                new Beer.CompareByCountry().compare(
+                rule.compare(
                         new Beer(name, lower, style, rating),
                         new Beer(name, lower, style, rating)
                 );
 
         final int resultHigher =
-                new Beer.CompareByCountry().compare(
+                rule.compare(
                         new Beer(name, higher, style, rating),
                         new Beer(name, lower, style, rating)
                 );
@@ -61,20 +63,21 @@ public final class BeerTest {
         final float lower = 0.1f;
         final float higher = 4.5f;
 
+        final Beer.CompareByRating rule = new Beer.CompareByRating(true);
         final int resultLower =
-                new Beer.CompareByRating().compare(
+                rule.compare(
                         new Beer(name, country, style, lower),
                         new Beer(name, country, style, higher)
                 );
 
         final int resultTheSame =
-                new Beer.CompareByRating().compare(
+                rule.compare(
                         new Beer(name, country, style, lower),
                         new Beer(name, country, style, lower)
                 );
 
         final int resultHigher =
-                new Beer.CompareByRating().compare(
+                rule.compare(
                         new Beer(name, country, style, higher),
                         new Beer(name, country, style, lower)
                 );

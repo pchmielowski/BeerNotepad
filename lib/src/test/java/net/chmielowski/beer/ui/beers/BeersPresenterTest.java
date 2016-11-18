@@ -133,21 +133,23 @@ public class BeersPresenterTest {
 
     // This test is ok
     @Test
-    public void sorting_method_set_few_times() {
+    public void sorting_method_set_few_times_order_set_once() {
         // TODO: this test depends on implementation of
         //       MethodNumberToSortingFunction.
         // Please, create a new ctor in BeerPresenter and inject the fction
         final List<Integer> sortingMethods = Arrays.asList(0, 1);
         when(mockedView.sortingMethodNumber()).thenReturn(
                 nonCompletingFrom(sortingMethods));
+        when(mockedView.sortingAscending()).thenReturn(
+                nonCompletingJust(true));
 
         new BeersPresenter(mockedView, mockedAction);
 
         InOrder order = inOrder(mockedAction);
         order.verify(mockedAction, times(1)).call(
-                new SortBeerFunction(new Beer.CompareByRating()));
+                new SortBeerFunction(new Beer.CompareByRating(true)));
         order.verify(mockedAction, times(1)).call(
-                new SortBeerFunction(new Beer.CompareByCountry()));
+                new SortBeerFunction(new Beer.CompareByCountry(true)));
     }
 
     private void verifyInteractionsWithViewOnlyDuringSetup() {

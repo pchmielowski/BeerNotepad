@@ -30,6 +30,10 @@ public final class Beer {
 
     @EqualsAndHashCode
     public static final class CompareByCountry implements Comparator<Beer> {
+        public CompareByCountry(final boolean b) {
+
+        }
+
         @Override
         public int compare(final Beer first, final Beer second) {
             return new Normalized(first.mCountry.compareTo(second.mCountry))
@@ -55,6 +59,10 @@ public final class Beer {
 
     @EqualsAndHashCode
     public static final class CompareByRating implements Comparator<Beer> {
+        public CompareByRating(final boolean b) {
+
+        }
+
         @Override
         public int compare(final Beer first, final Beer second) {
             return Float.compare(first.mRating, second.mRating);
