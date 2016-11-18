@@ -17,7 +17,9 @@ Allows user to create an account, log in and keep all information in a cloud ser
 * **app** - main application module: Android related code
 * **lib** - business logic module - presenters, model objects etc. Pure Java code.
 * **data** - Firebase related module
-* **log** - additional, helper, logging module
+* additional, will be moved to separate repos in the future:
+  * **log** - logging module
+  * **numeric** - number operations module
 
 ## Design assumptions
 
