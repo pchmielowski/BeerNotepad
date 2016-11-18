@@ -22,6 +22,7 @@
             android:name=".ui.beers.BeersActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".ui.addbeer.AddBeerActivity"/>
+        <activity android:name=".ui.regiser.RegisterActivity"/>
     </application>
 
 </manifest>

@@ -87,5 +87,16 @@ public final class LoginActivityTest {
                 .check(doesNotExist());
     }
 
+    @Test
+    public void opensRegistrationForm() {
+        mActivityTestRule.launchActivity(new Intent());
+
+        onView(withId(R.id.login_tv_register))
+                .perform(click());
+
+        onView(withId(R.id.register_et_email))
+                .check(matches(isDisplayed()));
+    }
+
 }
 

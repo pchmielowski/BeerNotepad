@@ -5,6 +5,8 @@ import rx.Observable;
 interface LoginView {
     Observable<Void> loginButtonClicked();
 
+    Observable<Void> registerLinkClicked();
+
     String email();
 
     String password();
@@ -14,4 +16,6 @@ interface LoginView {
     void startMainActivity();
 
     void showLoading();
+
+    void startRegisterActivity();
 }

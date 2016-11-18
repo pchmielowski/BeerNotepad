@@ -14,6 +14,12 @@ final class LoginPresenter {
         this.mUser = user;
         this.mView.loginButtonClicked().subscribe(
                 new LoginAction(mView, mUser));
+        this.mView.registerLinkClicked().subscribe(new Action1<Void>() {
+            @Override
+            public void call(final Void aVoid) {
+                mView.startRegisterActivity();
+            }
+        });
     }
 
     private static final class ShowLoginResultAction

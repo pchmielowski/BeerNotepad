@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -12,6 +13,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import net.chmielowski.beer.BuildConfig;
 import net.chmielowski.beer.R;
 import net.chmielowski.beer.ui.beers.BeersActivity;
+import net.chmielowski.beer.ui.regiser.RegisterActivity;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -31,6 +33,8 @@ final class BasicLoginView implements LoginView {
     Button mButtonLogin;
     @BindView(R.id.login_pb_wait)
     ProgressBar mProgress;
+    @BindView(R.id.login_tv_register)
+    TextView mRegister;
 
     BasicLoginView(final LoginActivity activity) {
         mActivity = activity;
@@ -39,11 +43,17 @@ final class BasicLoginView implements LoginView {
             mEmail.setText("piotrek@domain.com");
             mPassword.setText("passwd");
         }
+        mRegister.setClickable(true);
     }
 
     @Override
     public Observable<Void> loginButtonClicked() {
         return RxView.clicks(mButtonLogin);
+    }
+
+    @Override
+    public Observable<Void> registerLinkClicked() {
+        return RxView.clicks(mRegister);
     }
 
     @Override
@@ -60,18 +70,30 @@ final class BasicLoginView implements LoginView {
     public void showError() {
         mProgress.setVisibility(View.INVISIBLE);
         Toast.makeText(mActivity.getApplicationContext(), mLoginFailed,
-                Toast.LENGTH_LONG).show();
+                       Toast.LENGTH_LONG
+        ).show();
     }
 
     @Override
     public void startMainActivity() {
-        mActivity.startActivity(new Intent(mActivity.getApplicationContext(),
-                BeersActivity.class));
+        mActivity.startActivity(new Intent(
+                mActivity.getApplicationContext(),
+                BeersActivity.class
+        ));
         mActivity.finish();
     }
 
     @Override
     public void showLoading() {
         mProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void startRegisterActivity() {
+        mActivity.startActivity(new Intent(
+                mActivity.getApplicationContext(),
+                RegisterActivity.class
+        ));
+        mActivity.finish();
     }
 }
