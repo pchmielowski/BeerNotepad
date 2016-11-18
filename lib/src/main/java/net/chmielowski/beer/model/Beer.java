@@ -1,12 +1,12 @@
 package net.chmielowski.beer.model;
 
 import net.chmielowski.beer.ui.beers.BeerView;
+import net.chmielowski.numeric.Inverted;
+import net.chmielowski.numeric.Normalized;
 
 import java.util.Comparator;
 
 import lombok.EqualsAndHashCode;
-
-import static java.lang.Math.abs;
 
 @EqualsAndHashCode
 public final class Beer {
@@ -66,39 +66,4 @@ public final class Beer {
         }
     }
 
-    // TODO: following classes should
-    // 1. be moved to an external library (and new repo, gradle artf etc)
-    // 2. implement Number
-    // 3. be translated to Kotlin
-    static class Normalized {
-        private final int mValue;
-
-        Normalized(final int value) {
-            mValue = value;
-        }
-
-        int value() {
-            if (mValue == 0) {
-                return 0;
-            }
-            return mValue / abs(mValue);
-        }
-    }
-
-    private static class Inverted {
-        private final int mValue;
-        private final boolean mInvert;
-
-        Inverted(final int value, final boolean invert) {
-            mValue = value;
-            mInvert = invert;
-        }
-
-        int value() {
-            if (mInvert) {
-                return -mValue;
-            }
-            return mValue;
-        }
-    }
 }
