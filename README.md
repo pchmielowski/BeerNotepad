@@ -6,7 +6,7 @@ Allows user to create an account, log in and keep all information in a cloud ser
 ## Used technologies
 
 * **Firebase** as a user login service and a database
-* **Dagger2** for dependency injection (only in Activities and tests)
+* **Dagger2** for dependency injection
 * **Mockito**, **JUnit** and **Espresso** for tests (unit and instrumentation)
 * **Butterknife** for view injections
 * **RxJava** for reactive design
@@ -18,3 +18,10 @@ Allows user to create an account, log in and keep all information in a cloud ser
 * **lib** - business logic module - presenters, model objects etc. Pure Java code.
 * **data** - Firebase related module
 * **log** - additional, helper, logging module
+
+## Design assumptions
+
+* Usage of MVP pattern
+  * Lightweight `Activities` - view logic in separate `*View` classes
+* Almost all classes immutable
+* Dagger2 dependency injection in `Activities` and Espresso tests, plain constructor injection in other classes
