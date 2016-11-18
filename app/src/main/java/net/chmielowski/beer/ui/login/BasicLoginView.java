@@ -58,6 +58,7 @@ final class BasicLoginView implements LoginView {
 
     @Override
     public void showError() {
+        mProgress.setVisibility(View.INVISIBLE);
         Toast.makeText(mActivity.getApplicationContext(), mLoginFailed,
                 Toast.LENGTH_LONG).show();
     }

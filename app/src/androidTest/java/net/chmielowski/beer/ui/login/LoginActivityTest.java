@@ -25,6 +25,8 @@ import rx.Observable;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions
+        .doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -32,8 +34,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 @RunWith(AndroidJUnit4.class)
 public final class LoginActivityTest {
 
-    final String email = "bad email";
-    final String passwd = "bad passwd";
+    final String email = "email";
+    final String passwd = "passwd";
+    final String wrongPasswd = "wrong passwd";
     @Rule
     public ActivityTestRule<LoginActivity> mActivityTestRule =
             new ActivityTestRule<>(LoginActivity.class, true, false);
@@ -48,13 +51,14 @@ public final class LoginActivityTest {
                 .getTargetContext().getApplicationContext();
         TestComponent component = (TestComponent) app.cachedComponent();
         component.inject(this);
+        Mockito.when(mockedUser.login(email, passwd))
+               .thenReturn(Observable.just(true));
+        Mockito.when(mockedUser.login(email, wrongPasswd))
+               .thenReturn(Observable.just(false));
     }
 
     @Test
     public void loginsCorrectly() {
-        Mockito.when(mockedUser.login(email, passwd))
-               .thenReturn(Observable.just(true));
-
         mActivityTestRule.launchActivity(new Intent());
 
         onView(withId(R.id.login_et_email))
@@ -66,6 +70,21 @@ public final class LoginActivityTest {
 
         onView(withId(R.id.beers_rv_list))
                 .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void loginFails() {
+        mActivityTestRule.launchActivity(new Intent());
+
+        onView(withId(R.id.login_et_email))
+                .perform(replaceText(email));
+        onView(withId(R.id.login_et_password))
+                .perform(replaceText(wrongPasswd));
+        onView(withId(R.id.login_bt_login))
+                .perform(click());
+
+        onView(withId(R.id.beers_rv_list))
+                .check(doesNotExist());
     }
 
 }
