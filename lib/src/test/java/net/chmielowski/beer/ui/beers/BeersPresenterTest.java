@@ -89,8 +89,8 @@ public class BeersPresenterTest {
                 .thenReturn(nonCompletingJust(beers));
         when(mockedView.sortingMethodNumber()).thenReturn(
                 nonCompletingJust(0));
-//        Mockito.when(mockedView.sortingAscending()).thenReturn(
-//                nonCompletingJust(true));
+        when(mockedView.sortingAscending()).thenReturn(
+                nonCompletingJust(true));
 
         createBeersPresenter();
 
@@ -106,8 +106,8 @@ public class BeersPresenterTest {
         final List<Integer> sortingMethods = Arrays.asList(0, 1, 0);
         when(mockedView.sortingMethodNumber()).thenReturn(
                 nonCompletingFrom(sortingMethods));
-//        Mockito.when(mockedView.sortingAscending()).thenReturn(
-//                nonCompletingJust(true));
+        when(mockedView.sortingAscending()).thenReturn(
+                nonCompletingJust(true));
 
         createBeersPresenter();
 
