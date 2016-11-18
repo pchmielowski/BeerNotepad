@@ -25,8 +25,9 @@ import rx.Observable;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static org.mockito.Matchers.anyString;
 
 @RunWith(AndroidJUnit4.class)
 public final class LoginActivityTest {
@@ -51,7 +52,7 @@ public final class LoginActivityTest {
 
     @Test
     public void loginsCorrectly() {
-        Mockito.when(mockedUser.login(anyString(), anyString()))
+        Mockito.when(mockedUser.login(email, passwd))
                .thenReturn(Observable.just(true));
 
         mActivityTestRule.launchActivity(new Intent());
@@ -63,7 +64,8 @@ public final class LoginActivityTest {
         onView(withId(R.id.login_bt_login))
                 .perform(click());
 
-        // TODO: add assertion
+        onView(withId(R.id.beers_rv_list))
+                .check(matches(isDisplayed()));
     }
 
 }
