@@ -12,7 +12,7 @@ class AddBeerPresenter {
             @Override
             public void call(final Void aVoid) {
                 beers.add(view.name(), view.country(), view.style(),
-                          view.rating()
+                          view.rating(), view.photo()
                 );
                 activity.finish();
             }

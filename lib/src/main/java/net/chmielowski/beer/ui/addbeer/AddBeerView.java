@@ -14,4 +14,6 @@ interface AddBeerView {
     String style();
 
     Observable<Void> takePictureClicked();
+
+    String photo();
 }

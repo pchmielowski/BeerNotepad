@@ -22,22 +22,24 @@ import javax.inject.Inject;
 import rx.functions.Action1;
 
 public final class AddBeerActivity extends AppCompatActivity {
-    final int requestImageCapture = 1;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     @Inject
     Beers mBeers;
+    private BasicAddBeerView mView;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
         ((BeerApplication) getApplication()).cachedComponent().inject(this);
+        mView = new BasicAddBeerView(this);
         new AddBeerPresenter(
-                new BasicAddBeerView(this),
+                mView,
                 mBeers,
                 new Finishable() {
                     @Override
                     public void finish() {
-                        finish(); // TODO: why does it work?
+                        AddBeerActivity.this.finish();
                     }
                 },
                 new TakePictureAction()
@@ -49,15 +51,17 @@ public final class AddBeerActivity extends AppCompatActivity {
             final int requestCode,
             final int resultCode,
             final Intent data) {
-        if (requestCode != requestImageCapture || resultCode != RESULT_OK) {
+        if (requestCode != REQUEST_IMAGE_CAPTURE || resultCode != RESULT_OK) {
             return;
         }
         Bitmap bmp = photo(data);
         showImage(bmp);
-        new FbPhoto(
+        final FbPhoto fbPhoto = new FbPhoto(
                 FirebaseStorage.getInstance(),
                 getString(R.string.fb_storage_addr)
-        ).save(compressed(bmp));
+        );
+        fbPhoto.save(compressed(bmp));
+        mView.mPhoto = fbPhoto.id();
     }
 
     private Bitmap photo(final Intent intent) {
@@ -84,7 +88,7 @@ public final class AddBeerActivity extends AppCompatActivity {
             if (intent.resolveActivity(getPackageManager()) == null) {
                 return;
             }
-            startActivityForResult(intent, requestImageCapture);
+            startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
 
     }

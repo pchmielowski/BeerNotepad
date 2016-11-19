@@ -7,5 +7,6 @@ import rx.Observable;
 public interface Beers {
     Observable<List<Beer>> list();
 
-    void add(String name, String country, String style, float rating);
+    void add(String name, String country, String style, float rating,
+            String photo);
 }

@@ -23,7 +23,9 @@ final class BasicAddBeerView implements AddBeerView {
     EditText mCountry;
     @BindView(R.id.add_et_style)
     EditText mStyle;
-    @BindView(R.id.add_btn_picture) Button mTakePictureButton;
+    @BindView(R.id.add_btn_picture)
+    Button mTakePictureButton;
+    String mPhoto = ""; // TODO: smelling public field
 
     BasicAddBeerView(final AddBeerActivity activity) {
         this.mActivity = activity;
@@ -58,5 +60,10 @@ final class BasicAddBeerView implements AddBeerView {
     @Override
     public Observable<Void> takePictureClicked() {
         return RxView.clicks(mTakePictureButton);
+    }
+
+    @Override
+    public String photo() {
+        return mPhoto;
     }
 }

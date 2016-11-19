@@ -27,12 +27,13 @@ public final class FbBeers implements Beers {
 
     @Override
     public void add(final String name, final String country, final String style,
-            final float rating) {
+            final float rating, final String photo) {
         final StructBeer beer = new StructBeer();
         beer.mName = name;
         beer.mCountry = country;
         beer.mStyle = style;
         beer.mRating = rating;
+        beer.mPhoto = photo;
         mDatabase.push().setValue(beer);
     }
 
@@ -69,5 +70,6 @@ public final class FbBeers implements Beers {
         String mCountry;
         String mStyle;
         float mRating;
+        String mPhoto;
     }
 }
