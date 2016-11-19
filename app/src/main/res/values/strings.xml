@@ -29,6 +29,7 @@
     <string name="sort">Sort by:</string>
     <string name="ascending">Ascending</string>
     <string name="register">Register</string>
+    <string name="fb_storage_addr">gs://beers-541d0.appspot.com</string>
 
     <string-array name="sortBy">
         <item>Rating</item>

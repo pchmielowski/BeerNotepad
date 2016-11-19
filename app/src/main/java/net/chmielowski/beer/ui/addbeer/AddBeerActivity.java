@@ -7,9 +7,16 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import net.chmielowski.beer.BeerApplication;
 import net.chmielowski.beer.R;
 import net.chmielowski.beer.model.Beers;
+
+import java.io.ByteArrayOutputStream;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -46,7 +53,23 @@ public final class AddBeerActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             ((ImageView) findViewById(R.id.add_iv_picture)).setImageBitmap(
                     imageBitmap);
+
+            savePicture(imageBitmap);
         }
+    }
+
+    private void savePicture(final Bitmap bitmap) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference
+                storageRef = storage.getReferenceFromUrl(
+                getString(R.string.fb_storage_addr));
+        StorageReference imagesRef = storageRef.child(
+                "photos/" + UUID.randomUUID().toString());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final int quality = 100;
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+        byte[] data = baos.toByteArray();
+        UploadTask uploadTask = imagesRef.putBytes(data);
     }
 
     class TakePictureAction implements Action1<Void> {
