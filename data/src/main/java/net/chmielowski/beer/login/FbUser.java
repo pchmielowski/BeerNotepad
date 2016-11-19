@@ -32,8 +32,9 @@ public final class FbUser implements User {
     }
 
     @Override
-    public void register(final String email, final String password) {
-        throw new UnsupportedOperationException("not implemented yet");
+    public Observable<Boolean> register(final String email,
+            final String password) {
+        return Observable.just(true);
     }
 
     private static class ResultObservable

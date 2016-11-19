@@ -3,6 +3,7 @@ package net.chmielowski.beer.ui.regiser;
 import net.chmielowski.beer.login.User;
 
 import rx.functions.Action1;
+import rx.functions.Func1;
 
 final class RegisterPresenter {
     RegisterPresenter(final RegisterView view, final User user,
@@ -13,7 +14,12 @@ final class RegisterPresenter {
                 user.register(
                         view.email(),
                         view.password()
-                );
+                ).map(new Func1<Boolean, Void>() {
+                    @Override
+                    public Void call(final Boolean aBoolean) {
+                        return null;
+                    }
+                }).subscribe(startBeersActivityAction);
             }
         });
     }

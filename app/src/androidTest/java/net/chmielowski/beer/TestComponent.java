@@ -3,6 +3,7 @@ package net.chmielowski.beer;
 import net.chmielowski.beer.dagger.DgComponent;
 import net.chmielowski.beer.ui.beers.BeersActivityTest;
 import net.chmielowski.beer.ui.login.LoginActivityTest;
+import net.chmielowski.beer.ui.regiser.RegisterActivityTest;
 
 import javax.inject.Singleton;
 
@@ -14,4 +15,6 @@ public interface TestComponent extends DgComponent {
     void inject(LoginActivityTest test);
 
     void inject(BeersActivityTest test);
+
+    void inject(RegisterActivityTest test);
 }

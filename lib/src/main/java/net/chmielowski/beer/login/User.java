@@ -7,5 +7,5 @@ public interface User {
 
     Observable<Boolean> login(String name, String passwd);
 
-    void register(String email, String password);
+    Observable<Boolean> register(String email, String password);
 }
