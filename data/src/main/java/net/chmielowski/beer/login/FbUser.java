@@ -6,8 +6,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.kelvinapps.rxfirebase.RxFirebaseAuth;
 
 import rx.Observable;
+import rx.functions.Func1;
 import rx.subjects.PublishSubject;
 
 public final class FbUser implements User {
@@ -34,7 +36,15 @@ public final class FbUser implements User {
     @Override
     public Observable<Boolean> register(final String email,
             final String password) {
-        return Observable.just(true);
+        return RxFirebaseAuth
+                .createUserWithEmailAndPassword(mAuth, email, password)
+                .map(new Func1<AuthResult, Boolean>() {
+                    @Override
+                    public Boolean call(final AuthResult authResult) {
+                        final boolean success = authResult.getUser() != null;
+                        return success;
+                    }
+                });
     }
 
     private static class ResultObservable

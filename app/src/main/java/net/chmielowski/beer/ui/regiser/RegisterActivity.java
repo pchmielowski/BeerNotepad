@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -34,7 +35,8 @@ public final class RegisterActivity extends Activity {
         );
     }
 
-    class BasicRegisterView implements RegisterView {
+    static class BasicRegisterView implements RegisterView {
+        private final RegisterActivity mActivity;
         @BindView(R.id.register_bt_register)
         Button mRegisterButton;
         @BindView(R.id.register_et_email)
@@ -45,6 +47,7 @@ public final class RegisterActivity extends Activity {
         BasicRegisterView(
                 final RegisterActivity activity) {
             ButterKnife.bind(this, activity);
+            mActivity = activity;
         }
 
         @Override
@@ -60,6 +63,14 @@ public final class RegisterActivity extends Activity {
         @Override
         public String password() {
             return String.valueOf(mPassword.getText());
+        }
+
+        @Override
+        public void showError(final String message) {
+            Toast.makeText(
+                    mActivity.getApplicationContext(), message,
+                    Toast.LENGTH_LONG
+            ).show();
         }
     }
 }

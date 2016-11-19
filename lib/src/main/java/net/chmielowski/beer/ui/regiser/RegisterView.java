@@ -8,4 +8,6 @@ interface RegisterView {
     String email();
 
     String password();
+
+    void showError(String message);
 }

@@ -19,7 +19,15 @@ final class RegisterPresenter {
                     public Void call(final Boolean aBoolean) {
                         return null;
                     }
-                }).subscribe(startBeersActivityAction);
+                }).subscribe(
+                        startBeersActivityAction,
+                        new Action1<Throwable>() {
+                            @Override
+                            public void call(final Throwable throwable) {
+                                view.showError(throwable.getMessage());
+                            }
+                        }
+                );
             }
         });
     }

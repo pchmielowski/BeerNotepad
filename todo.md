@@ -1,6 +1,6 @@
 - [x] User private data in DB
 - [x] Better sorting criterias
-- [ ] Register page
+- [x] Register page
 - [ ] Facebook login
 - [ ] Better look
 - [ ] Google Play
