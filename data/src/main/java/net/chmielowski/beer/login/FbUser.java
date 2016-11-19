@@ -31,6 +31,11 @@ public final class FbUser implements User {
         return status.asObservable();
     }
 
+    @Override
+    public void register(final String email, final String password) {
+        throw new UnsupportedOperationException("not implemented yet");
+    }
+
     private static class ResultObservable
             implements OnCompleteListener<AuthResult> {
         private final PublishSubject<Boolean> mStatus;

@@ -6,7 +6,7 @@ import static java.lang.Math.abs;
 // 1. be moved to an external library (and new repo, gradle artf etc)
 // 2. implement Number
 // 3. be translated to Kotlin
-public class Normalized {
+public final class Normalized {
     private final int mValue;
 
     public Normalized(final int value) {
