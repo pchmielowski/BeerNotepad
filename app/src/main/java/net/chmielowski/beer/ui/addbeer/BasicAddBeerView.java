@@ -1,5 +1,6 @@
 package net.chmielowski.beer.ui.addbeer;
 
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
@@ -22,6 +23,7 @@ final class BasicAddBeerView implements AddBeerView {
     EditText mCountry;
     @BindView(R.id.add_et_style)
     EditText mStyle;
+    @BindView(R.id.add_btn_picture) Button mTakePictureButton;
 
     BasicAddBeerView(final AddBeerActivity activity) {
         this.mActivity = activity;
@@ -29,7 +31,7 @@ final class BasicAddBeerView implements AddBeerView {
     }
 
     @Override
-    public Observable okClicked() {
+    public Observable<Void> okClicked() {
         return RxView.clicks(mActivity.findViewById(R.id.add_btn_ok));
     }
 
@@ -51,5 +53,10 @@ final class BasicAddBeerView implements AddBeerView {
     @Override
     public String style() {
         return String.valueOf(mStyle.getText());
+    }
+
+    @Override
+    public Observable<Void> takePictureClicked() {
+        return RxView.clicks(mTakePictureButton);
     }
 }

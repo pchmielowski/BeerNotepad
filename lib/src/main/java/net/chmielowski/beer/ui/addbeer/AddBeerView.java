@@ -3,7 +3,7 @@ package net.chmielowski.beer.ui.addbeer;
 import rx.Observable;
 
 interface AddBeerView {
-    Observable okClicked();
+    Observable<Void> okClicked();
 
     String name();
 
@@ -12,4 +12,6 @@ interface AddBeerView {
     float rating();
 
     String style();
+
+    Observable<Void> takePictureClicked();
 }
