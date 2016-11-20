@@ -8,12 +8,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
-import com.google.firebase.storage.FirebaseStorage;
-
 import net.chmielowski.beer.BeerApplication;
 import net.chmielowski.beer.R;
 import net.chmielowski.beer.model.Beers;
-import net.chmielowski.beer.model.FbPhoto;
+import net.chmielowski.beer.model.Photo;
 
 import java.io.ByteArrayOutputStream;
 
@@ -25,14 +23,15 @@ public final class AddBeerActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     @Inject
     Beers mBeers;
-    private BasicAddBeerView mView;
+    @Inject
+    Photo mPhoto;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_beer);
         ((BeerApplication) getApplication()).cachedComponent().inject(this);
-        mView = new BasicAddBeerView(this);
+        BasicAddBeerView mView = new BasicAddBeerView(this);
         new AddBeerPresenter(
                 mView,
                 mBeers,
@@ -42,7 +41,8 @@ public final class AddBeerActivity extends AppCompatActivity {
                         AddBeerActivity.this.finish();
                     }
                 },
-                new TakePictureAction()
+                new TakePictureAction(),
+                mPhoto
         );
     }
 
@@ -56,12 +56,7 @@ public final class AddBeerActivity extends AppCompatActivity {
         }
         Bitmap bmp = photo(data);
         showImage(bmp);
-        final FbPhoto fbPhoto = new FbPhoto(
-                FirebaseStorage.getInstance(),
-                getString(R.string.fb_storage_addr)
-        );
-        fbPhoto.save(compressed(bmp));
-        mView.mPhoto = fbPhoto.id();
+        mPhoto.save(compressed(bmp));
     }
 
     private Bitmap photo(final Intent intent) {
@@ -85,9 +80,9 @@ public final class AddBeerActivity extends AppCompatActivity {
         @Override
         public void call(final Void aVoid) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (intent.resolveActivity(getPackageManager()) == null) {
-                return;
-            }
+//            if (intent.resolveActivity(getPackageManager()) == null) {
+//                return;
+//            }
             startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
         }
 

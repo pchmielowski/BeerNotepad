@@ -1,7 +1,6 @@
 package net.chmielowski.beer.model;
 
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.util.UUID;
@@ -22,22 +21,15 @@ public final class FbPhoto implements Photo {
         this(storage, addr, UUID.randomUUID().toString());
     }
 
+    @Override
     public String id() {
         return mId;
     }
 
     @Override
     public void save(final ByteArrayOutputStream stream) {
-        final StorageReference reference = mStorage.getReferenceFromUrl(mAddr)
-                                                   .child("photos/" + mId);
-        if (fileExist(reference)) {
-            throw new IllegalStateException(
-                    "Photo with ID " + mId + " already exist");
-        }
-        reference.putBytes(stream.toByteArray());
-    }
-
-    private boolean fileExist(final StorageReference reference) {
-        return reference.getDownloadUrl().isSuccessful();
+        mStorage.getReferenceFromUrl(mAddr)
+                .child("photos/" + mId)
+                .putBytes(stream.toByteArray());
     }
 }

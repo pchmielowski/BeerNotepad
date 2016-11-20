@@ -2,11 +2,14 @@ package net.chmielowski.beer.dagger;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 
 import net.chmielowski.beer.login.FbUser;
 import net.chmielowski.beer.login.User;
 import net.chmielowski.beer.model.Beers;
 import net.chmielowski.beer.model.FbBeers;
+import net.chmielowski.beer.model.FbPhoto;
+import net.chmielowski.beer.model.Photo;
 
 import javax.inject.Singleton;
 
@@ -35,6 +38,14 @@ public final class DgModule {
                 FirebaseDatabase.getInstance()
                                 .getReference()
                                 .child(user.uid()));
+    }
+
+    @Provides
+    Photo providePhoto() {
+        return new FbPhoto(
+                FirebaseStorage.getInstance(),
+                "gs://beers-541d0.appspot.com" // TODO: from resources
+        );
     }
 
 }
