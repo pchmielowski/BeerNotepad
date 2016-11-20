@@ -1,5 +1,6 @@
 package net.chmielowski.beer.ui.beers;
 
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.storage.FirebaseStorage;
 import com.jakewharton.rxbinding.view.RxView;
 
 import net.chmielowski.beer.R;
 import net.chmielowski.beer.model.Beer;
+import net.chmielowski.beer.model.FbPhoto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,11 +89,34 @@ final class BeersAdapter
 
         @Override
         public void showBeer(final String name, final float rating,
-                final String style, final String country) {
+                final String style,
+                final String country, final byte[] photo) {
             this.mName.setText(name);
             this.mRating.setText(String.valueOf(rating));
             this.mStyle.setText(style);
             this.mCountry.setText(country);
+            this.mImage.setImageBitmap(BitmapFactory.decodeByteArray(
+                    photo, 0, photo.length));
+        }
+
+        @Override
+        public void showBeer(final String name, final float rating,
+                final String style, final String country) {
+            // CHECKSTYLE:OFF
+            new FbPhoto(
+                    FirebaseStorage.getInstance(),
+                    "gs://beers-541d0.appspot.com",
+                    "054081b0-1833-46fd-975e-0757fcd7ead9"
+            ).bytes().subscribe(new Action1<byte[]>() {
+                @Override
+                public void call(byte[] bytes) {
+                    showBeer(
+                            name, rating, style, country,
+                            bytes
+                    );
+                }
+            });
+            // CHECKSTYLE:ON
         }
 
         @Override
