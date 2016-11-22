@@ -53,7 +53,7 @@ public class IterableToListTest {
 
     @Test
     public void one_beer() throws Exception {
-        final List<Beer> result = new FbBeers.IterableToList().call(
+        final List<Beer> result = new FbBeers.IterableToList(photos).call(
                 Collections.singletonList(
                         mockedSnapshot(firstBeerAsStruct)));
 
@@ -66,7 +66,7 @@ public class IterableToListTest {
 
     @Test
     public void few_beers() throws Exception {
-        final List<Beer> result = new FbBeers.IterableToList().call(
+        final List<Beer> result = new FbBeers.IterableToList(photos).call(
                 Arrays.asList(
                         mockedSnapshot(firstBeerAsStruct),
                         mockedSnapshot(secondBeerAsStruct)

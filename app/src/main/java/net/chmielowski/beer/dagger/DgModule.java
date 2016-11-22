@@ -9,6 +9,7 @@ import net.chmielowski.beer.login.User;
 import net.chmielowski.beer.model.Beers;
 import net.chmielowski.beer.model.FbBeers;
 import net.chmielowski.beer.model.FbPhoto;
+import net.chmielowski.beer.model.FbPhotos;
 import net.chmielowski.beer.model.Photo;
 
 import javax.inject.Singleton;
@@ -37,7 +38,12 @@ public final class DgModule {
         return new FbBeers(
                 FirebaseDatabase.getInstance()
                                 .getReference()
-                                .child(user.uid()));
+                                .child(user.uid()),
+                new FbPhotos(
+                        FirebaseStorage.getInstance(),
+                        "gs://beers-541d0.appspot.com"
+                )
+        );
     }
 
     @Provides

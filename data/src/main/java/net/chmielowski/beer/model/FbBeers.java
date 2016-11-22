@@ -2,7 +2,6 @@ package net.chmielowski.beer.model;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.storage.FirebaseStorage;
 import com.kelvinapps.rxfirebase.RxFirebaseDatabase;
 
 import java.util.LinkedList;
@@ -15,15 +14,18 @@ import rx.subjects.ReplaySubject;
 public final class FbBeers implements Beers {
 
     private final DatabaseReference mDatabase;
+    private final FbPhotos mPhotos;
 
-    public FbBeers(final DatabaseReference ref) {
+    public FbBeers(final DatabaseReference ref, final FbPhotos photos) {
         mDatabase = ref;
+        mPhotos = photos;
     }
 
     @Override
     public Observable<List<Beer>> list() {
-        return RxFirebaseDatabase.observeSingleValueEvent(mDatabase)
-                                 .flatMap(new SnapshotToListObservable());
+        return RxFirebaseDatabase
+                .observeSingleValueEvent(mDatabase)
+                .flatMap(new SnapshotToListObservable(mPhotos));
     }
 
     @Override
@@ -40,32 +42,47 @@ public final class FbBeers implements Beers {
 
     private static class SnapshotToListObservable
             implements Func1<DataSnapshot, Observable<List<Beer>>> {
+
+        private final FbPhotos mPhotos;
+
+        SnapshotToListObservable(final FbPhotos photos) {
+            mPhotos = photos;
+        }
+
         @Override
         public Observable<List<Beer>> call(final DataSnapshot snapshot) {
             ReplaySubject<Iterable<DataSnapshot>> subject =
                     ReplaySubject.create();
             subject.onNext(snapshot.getChildren());
-            return subject.map(new IterableToList());
+            return subject.map(new IterableToList(mPhotos));
         }
 
     }
 
     static class IterableToList
             implements Func1<Iterable<DataSnapshot>, List<Beer>> {
+
+        private final FbPhotos mPhotos;
+
+        IterableToList(final FbPhotos photos) {
+            mPhotos = photos;
+        }
+
         @Override
         public List<Beer> call(final Iterable<DataSnapshot> dataSnapshots) {
             // CHECKSTYLE:OFF
             List<Beer> beers = new LinkedList<Beer>();
             for (DataSnapshot s : dataSnapshots) {
                 final StructBeer beer = s.getValue(StructBeer.class);
-                beers.add(new Beer(beer.mName, beer.mCountry, beer.mStyle,
-                                   beer.mRating,
-                                   new FbPhotos(
-                                           FirebaseStorage.getInstance(),
-                                           "gs://beers-541d0.appspot.com"
-                                   ).photo("054081b0-1833-46fd-975e-0757fcd7ead9")
-
-                ));
+                beers.add(
+                        new Beer(
+                                beer.mName,
+                                beer.mCountry,
+                                beer.mStyle,
+                                beer.mRating,
+                                mPhotos.photo(
+                                        "054081b0-1833-46fd-975e-0757fcd7ead9")
+                        ));
             }
             return beers;
             // CHECKSTYLE:ON
