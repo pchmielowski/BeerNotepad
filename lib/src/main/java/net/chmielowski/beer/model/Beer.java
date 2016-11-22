@@ -14,17 +14,19 @@ public final class Beer {
     private final String mCountry;
     private final String mStyle;
     private final float mRating;
+    private final Photo mPhoto;
 
     public Beer(final String name, final String country, final String style,
-            final float rating) {
+            final float rating, final Photo photo) {
         mName = name;
         mCountry = country;
         mStyle = style;
         mRating = rating;
+        mPhoto = photo;
     }
 
     public BeerView showOn(final BeerView view) {
-        view.showBeer(mName, mRating, mStyle, mCountry);
+        view.showBeer(mName, mRating, mStyle, mCountry, mPhoto);
         return view; // TODO: why is it returning?
     }
 

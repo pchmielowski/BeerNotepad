@@ -2,6 +2,7 @@ package net.chmielowski.beer.model;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
 import com.kelvinapps.rxfirebase.RxFirebaseDatabase;
 
 import java.util.LinkedList;
@@ -53,14 +54,22 @@ public final class FbBeers implements Beers {
             implements Func1<Iterable<DataSnapshot>, List<Beer>> {
         @Override
         public List<Beer> call(final Iterable<DataSnapshot> dataSnapshots) {
+            // CHECKSTYLE:OFF
             List<Beer> beers = new LinkedList<Beer>();
             for (DataSnapshot s : dataSnapshots) {
                 final StructBeer beer = s.getValue(StructBeer.class);
                 beers.add(new Beer(beer.mName, beer.mCountry, beer.mStyle,
-                                   beer.mRating
+                                   beer.mRating,
+                                   new FbPhoto(
+                                           FirebaseStorage.getInstance(),
+                                           "gs://beers-541d0.appspot.com",
+                                           "054081b0-1833-46fd-975e-0757fcd7ead9"
+                                   )
+
                 ));
             }
             return beers;
+            // CHECKSTYLE:ON
         }
 
     }

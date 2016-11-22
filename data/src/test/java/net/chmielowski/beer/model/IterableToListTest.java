@@ -46,7 +46,8 @@ public class IterableToListTest {
                 struct.mName,
                 struct.mCountry,
                 struct.mStyle,
-                struct.mRating
+                struct.mRating,
+                photo
         );
     }
 

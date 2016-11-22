@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.storage.FirebaseStorage;
 import com.jakewharton.rxbinding.view.RxView;
 
 import net.chmielowski.beer.R;
 import net.chmielowski.beer.model.Beer;
-import net.chmielowski.beer.model.FbPhoto;
 import net.chmielowski.beer.model.Photo;
 
 import java.util.ArrayList;
@@ -104,21 +102,6 @@ final class BeersAdapter
 
                 }
             });
-        }
-
-        @Override
-        public void showBeer(final String name, final float rating,
-                final String style, final String country) {
-            // CHECKSTYLE:OFF
-            showBeer(
-                    name, rating, style, country,
-                    new FbPhoto(
-                            FirebaseStorage.getInstance(),
-                            "gs://beers-541d0.appspot.com",
-                            "054081b0-1833-46fd-975e-0757fcd7ead9"
-                    )
-            );
-            // CHECKSTYLE:ON
         }
 
         @Override

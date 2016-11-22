@@ -63,13 +63,15 @@ public class BeersPresenterTest {
                         "first name",
                         "aaa country",
                         "first style",
-                        2.0f
+                        2.0f,
+                        photo
                 ),
                 new Beer(
                         "second name",
                         "bbb country",
                         "second style",
-                        1.0f
+                        1.0f,
+                        photo
                 )
         );
     }

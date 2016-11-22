@@ -8,8 +8,6 @@ public interface BeerView {
             String style,
             String country, Photo photo);
 
-    void showBeer(String name, float rating, String style, String country);
-
     void expand();
 
     void collapse();

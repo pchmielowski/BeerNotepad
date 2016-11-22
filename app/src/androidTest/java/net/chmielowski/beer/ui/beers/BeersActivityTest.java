@@ -58,8 +58,8 @@ public final class BeersActivityTest {
     public void sorted_by_rating_ascending() {
         ReplaySubject<List<Beer>> subject = ReplaySubject.create();
         subject.onNext(Arrays.asList(
-                new Beer("bbb", "c1", "s1", 0.0f),
-                new Beer("aaa", "c2", "s2", 1.0f)
+                new Beer("bbb", "c1", "s1", 0.0f, photo),
+                new Beer("aaa", "c2", "s2", 1.0f, photo)
         ));
         Mockito.when(mockedBeers.list())
                .thenReturn(subject);
@@ -74,8 +74,8 @@ public final class BeersActivityTest {
     public void sorted_by_country_descending() {
         ReplaySubject<List<Beer>> subject = ReplaySubject.create();
         subject.onNext(Arrays.asList(
-                new Beer("from bbb", "Czechy", "s1", 0.0f),
-                new Beer("from aaa", "Austria", "s2", 1.0f)
+                new Beer("from bbb", "Czechy", "s1", 0.0f, photo),
+                new Beer("from aaa", "Austria", "s2", 1.0f, photo)
         ));
         Mockito.when(mockedBeers.list())
                .thenReturn(subject);
@@ -95,8 +95,8 @@ public final class BeersActivityTest {
     public void sorted_by_country_order_change() {
         ReplaySubject<List<Beer>> subject = ReplaySubject.create();
         subject.onNext(Arrays.asList(
-                new Beer("from bbb", "Czechy", "s1", 0.0f),
-                new Beer("from aaa", "Austria", "s2", 1.0f)
+                new Beer("from bbb", "Czechy", "s1", 0.0f, photo),
+                new Beer("from aaa", "Austria", "s2", 1.0f, photo)
         ));
         Mockito.when(mockedBeers.list())
                .thenReturn(subject);
