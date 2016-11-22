@@ -115,13 +115,14 @@ final class BeersAdapter
                         public void call(final Throwable throwable) {
                             Log.i("show beer::onError", throwable.getMessage());
                             hideProgressBar();
+                            mImage.setVisibility(View.GONE);
                         }
                     }
             );
         }
 
         private void hideProgressBar() {
-            mProgressBar.setVisibility(View.INVISIBLE);
+            mProgressBar.setVisibility(View.GONE);
         }
 
         @Override

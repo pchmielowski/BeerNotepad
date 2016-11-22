@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/photo"
         android:visibility="invisible"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/beer_pb_photo_loads"
         app:layout_constraintTop_toTopOf="parent"
         />
 
