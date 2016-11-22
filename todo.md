@@ -6,4 +6,4 @@
 - [ ] Google Play
 - [ ] Video + screenshots
 - [ ] Logo
-- [ ] Beer's picture
+- [x] Beer's picture
