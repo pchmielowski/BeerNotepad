@@ -60,11 +60,10 @@ public final class FbBeers implements Beers {
                 final StructBeer beer = s.getValue(StructBeer.class);
                 beers.add(new Beer(beer.mName, beer.mCountry, beer.mStyle,
                                    beer.mRating,
-                                   new FbPhoto(
+                                   new FbPhotos(
                                            FirebaseStorage.getInstance(),
-                                           "gs://beers-541d0.appspot.com",
-                                           "054081b0-1833-46fd-975e-0757fcd7ead9"
-                                   )
+                                           "gs://beers-541d0.appspot.com"
+                                   ).photo("054081b0-1833-46fd-975e-0757fcd7ead9")
 
                 ));
             }
@@ -81,4 +80,5 @@ public final class FbBeers implements Beers {
         float mRating;
         String mPhoto;
     }
+
 }
