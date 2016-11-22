@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -75,6 +76,7 @@ final class BeersAdapter
         private final TextView mRating;
         private final TextView mStyle;
         private final TextView mCountry;
+        private final ProgressBar mProgressBar;
         @BindView(R.id.beer_iv_photo)
         ImageView mImage;
 
@@ -85,6 +87,8 @@ final class BeersAdapter
             this.mRating = (TextView) v.findViewById(R.id.beer_tv_rating);
             this.mStyle = (TextView) v.findViewById(R.id.beer_tv_style);
             this.mCountry = (TextView) v.findViewById(R.id.beer_tv_country);
+            this.mProgressBar = (ProgressBar) v.findViewById(
+                    R.id.beer_pb_photo_loads);
         }
 
         @Override
@@ -101,6 +105,8 @@ final class BeersAdapter
                         public void call(final byte[] bytes) {
                             mImage.setImageBitmap(BitmapFactory.decodeByteArray(
                                     bytes, 0, bytes.length));
+                            hideProgressBar();
+                            mImage.setVisibility(View.VISIBLE);
 
                         }
                     },
@@ -108,9 +114,14 @@ final class BeersAdapter
                         @Override
                         public void call(final Throwable throwable) {
                             Log.i("show beer::onError", throwable.getMessage());
+                            hideProgressBar();
                         }
                     }
             );
+        }
+
+        private void hideProgressBar() {
+            mProgressBar.setVisibility(View.INVISIBLE);
         }
 
         @Override
