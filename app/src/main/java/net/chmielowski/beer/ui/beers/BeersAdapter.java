@@ -2,6 +2,7 @@ package net.chmielowski.beer.ui.beers;
 
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,14 +95,22 @@ final class BeersAdapter
             this.mRating.setText(String.valueOf(rating));
             this.mStyle.setText(style);
             this.mCountry.setText(country);
-            photo.bytes().subscribe(new Action1<byte[]>() {
-                @Override
-                public void call(final byte[] bytes) {
-                    mImage.setImageBitmap(BitmapFactory.decodeByteArray(
-                            bytes, 0, bytes.length));
+            photo.bytes().subscribe(
+                    new Action1<byte[]>() {
+                        @Override
+                        public void call(final byte[] bytes) {
+                            mImage.setImageBitmap(BitmapFactory.decodeByteArray(
+                                    bytes, 0, bytes.length));
 
-                }
-            });
+                        }
+                    },
+                    new Action1<Throwable>() {
+                        @Override
+                        public void call(final Throwable throwable) {
+                            Log.i("show beer::onError", throwable.getMessage());
+                        }
+                    }
+            );
         }
 
         @Override

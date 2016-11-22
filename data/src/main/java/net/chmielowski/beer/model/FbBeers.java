@@ -80,8 +80,7 @@ public final class FbBeers implements Beers {
                                 beer.mCountry,
                                 beer.mStyle,
                                 beer.mRating,
-                                mPhotos.photo(
-                                        "054081b0-1833-46fd-975e-0757fcd7ead9")
+                                mPhotos.photo(beer.mPhoto)
                         ));
             }
             return beers;
