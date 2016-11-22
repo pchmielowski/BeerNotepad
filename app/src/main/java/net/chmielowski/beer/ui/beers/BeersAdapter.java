@@ -14,6 +14,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import net.chmielowski.beer.R;
 import net.chmielowski.beer.model.Beer;
 import net.chmielowski.beer.model.FbPhoto;
+import net.chmielowski.beer.model.Photo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,32 +91,33 @@ final class BeersAdapter
         @Override
         public void showBeer(final String name, final float rating,
                 final String style,
-                final String country, final byte[] photo) {
+                final String country, final Photo photo) {
             this.mName.setText(name);
             this.mRating.setText(String.valueOf(rating));
             this.mStyle.setText(style);
             this.mCountry.setText(country);
-            this.mImage.setImageBitmap(BitmapFactory.decodeByteArray(
-                    photo, 0, photo.length));
+            photo.bytes().subscribe(new Action1<byte[]>() {
+                @Override
+                public void call(final byte[] bytes) {
+                    mImage.setImageBitmap(BitmapFactory.decodeByteArray(
+                            bytes, 0, bytes.length));
+
+                }
+            });
         }
 
         @Override
         public void showBeer(final String name, final float rating,
                 final String style, final String country) {
             // CHECKSTYLE:OFF
-            new FbPhoto(
-                    FirebaseStorage.getInstance(),
-                    "gs://beers-541d0.appspot.com",
-                    "054081b0-1833-46fd-975e-0757fcd7ead9"
-            ).bytes().subscribe(new Action1<byte[]>() {
-                @Override
-                public void call(byte[] bytes) {
-                    showBeer(
-                            name, rating, style, country,
-                            bytes
-                    );
-                }
-            });
+            showBeer(
+                    name, rating, style, country,
+                    new FbPhoto(
+                            FirebaseStorage.getInstance(),
+                            "gs://beers-541d0.appspot.com",
+                            "054081b0-1833-46fd-975e-0757fcd7ead9"
+                    )
+            );
             // CHECKSTYLE:ON
         }
 
