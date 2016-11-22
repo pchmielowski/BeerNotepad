@@ -20,6 +20,8 @@ import dagger.Provides;
 @Module
 public final class DgModule {
 
+    private static final String STORAGE_URL = "gs://beers-541d0.appspot.com";
+
     @Singleton
     @Provides
     FirebaseAuth provideFirebaseAuth() {
@@ -32,25 +34,31 @@ public final class DgModule {
         return new FbUser(auth);
     }
 
+    @Singleton
+    @Provides
+    FirebaseStorage provideStorage() {
+        return FirebaseStorage.getInstance();
+    }
+
     @Singleton// TODO: check if is necessary
     @Provides
-    Beers provideFireBaseBeers(final User user) {
+    Beers provideFireBaseBeers(final User user, final FirebaseStorage storage) {
         return new FbBeers(
                 FirebaseDatabase.getInstance()
                                 .getReference()
                                 .child(user.uid()),
                 new FbPhotos(
-                        FirebaseStorage.getInstance(),
-                        "gs://beers-541d0.appspot.com"
+                        storage,
+                        STORAGE_URL
                 )
         );
     }
 
     @Provides
-    Photo providePhoto() {
+    Photo providePhoto(final FirebaseStorage storage) {
         return new FbPhoto(
-                FirebaseStorage.getInstance(),
-                "gs://beers-541d0.appspot.com" // TODO: from resources
+                storage,
+                STORAGE_URL // TODO: from resources
         );
     }
 
