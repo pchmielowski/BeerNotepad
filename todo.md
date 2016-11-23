@@ -9,3 +9,4 @@
 - [x] Beers' picture
 - [ ] CI and coverage 
 - [ ] Caching data
+- [ ] Demo mode (without login)
