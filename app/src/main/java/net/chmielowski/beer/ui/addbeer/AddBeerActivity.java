@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 
 import net.chmielowski.beer.BeerApplication;
@@ -64,8 +65,11 @@ public final class AddBeerActivity extends AppCompatActivity {
     }
 
     private void showImage(final Bitmap bmp) {
-        ((ImageView) findViewById(R.id.add_iv_picture))
-                .setImageBitmap(bmp);
+        final ImageView imageView = (ImageView) findViewById(
+                R.id.add_iv_picture);
+        findViewById(R.id.add_btn_picture).setVisibility(View.INVISIBLE);
+        imageView.setVisibility(View.VISIBLE);
+        imageView.setImageBitmap(bmp);
     }
 
     @NonNull

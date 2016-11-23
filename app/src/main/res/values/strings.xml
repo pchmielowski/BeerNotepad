@@ -33,6 +33,8 @@
     <string name="country">country</string>
     <string name="rating">rating</string>
     <string name="name">name</string>
+    <string name="style">Style</string>
+    <string name="Rating">Rating</string>
 
     <string-array name="sortBy">
         <item>@string/rating</item>
