@@ -6,4 +6,5 @@
 - [ ] Google Play
 - [ ] Video + screenshots
 - [ ] Logo
-- [x] Beer's picture
+- [x] Beers' picture
+- [ ] CI and coverage 
