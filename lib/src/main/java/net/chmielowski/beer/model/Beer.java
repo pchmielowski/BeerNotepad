@@ -93,4 +93,20 @@ public final class Beer {
             ).value();
         }
     }
+
+    public static final class CompareByName extends CompareBeer {
+        public CompareByName(
+                final Boolean ascending) {
+            super(ascending);
+        }
+
+        @Override
+        public int compare(final Beer first, final Beer second) {
+            return new CompareStrings(
+                    first.mName,
+                    second.mName,
+                    mAscending
+            ).value();
+        }
+    }
 }

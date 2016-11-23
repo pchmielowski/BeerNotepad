@@ -34,5 +34,6 @@
     <string-array name="sortBy">
         <item>Rating</item>
         <item>Country</item>
+        <item>Name</item>
     </string-array>
 </resources>

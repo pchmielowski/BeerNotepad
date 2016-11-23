@@ -24,6 +24,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.subjects.ReplaySubject;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -35,6 +36,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.mockito.Mockito.when;
 
 @RunWith(AndroidJUnit4.class)
 public final class BeersActivityTest {
@@ -55,6 +57,9 @@ public final class BeersActivityTest {
         TestComponent component = (TestComponent) app.cachedComponent();
         component.inject(this);
         mockedPhoto = Mockito.mock(Photo.class);
+        final byte[] emptyBitmap = {0};
+        when(mockedPhoto.bytes()).thenReturn(
+                Observable.just(emptyBitmap));
     }
 
     @Test
@@ -64,13 +69,34 @@ public final class BeersActivityTest {
                 new Beer("bbb", "c1", "s1", 0.0f, mockedPhoto),
                 new Beer("aaa", "c2", "s2", 1.0f, mockedPhoto)
         ));
-        Mockito.when(mockedBeers.list())
-               .thenReturn(subject);
+        when(mockedBeers.list())
+                .thenReturn(subject);
 
         mActivityTestRule.launchActivity(new Intent());
 
         onView(withText("bbb"))
                 .check(isAbove(withText("aaa")));
+    }
+
+    @Test
+    public void sorted_by_name_ascending() {
+        ReplaySubject<List<Beer>> subject = ReplaySubject.create();
+        subject.onNext(Arrays.asList(
+                new Beer("aaa", "c1", "s1", 0.0f, mockedPhoto),
+                new Beer("bbb", "c2", "s2", 1.0f, mockedPhoto)
+        ));
+        when(mockedBeers.list())
+                .thenReturn(subject);
+
+        mActivityTestRule.launchActivity(new Intent());
+
+        onView(withId(R.id.beers_sp_sort))
+                .perform(click());
+        onView(withText("Name"))
+                .perform(click());
+
+        onView(withText("aaa"))
+                .check(isAbove(withText("bbb")));
     }
 
     @Test
@@ -80,8 +106,8 @@ public final class BeersActivityTest {
                 new Beer("from bbb", "Czechy", "s1", 0.0f, mockedPhoto),
                 new Beer("from aaa", "Austria", "s2", 1.0f, mockedPhoto)
         ));
-        Mockito.when(mockedBeers.list())
-               .thenReturn(subject);
+        when(mockedBeers.list())
+                .thenReturn(subject);
 
         mActivityTestRule.launchActivity(new Intent());
 
@@ -101,8 +127,8 @@ public final class BeersActivityTest {
                 new Beer("from bbb", "Czechy", "s1", 0.0f, mockedPhoto),
                 new Beer("from aaa", "Austria", "s2", 1.0f, mockedPhoto)
         ));
-        Mockito.when(mockedBeers.list())
-               .thenReturn(subject);
+        when(mockedBeers.list())
+                .thenReturn(subject);
 
         mActivityTestRule.launchActivity(new Intent());
 

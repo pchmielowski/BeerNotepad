@@ -20,8 +20,13 @@ class MethodNumberToSortingFunction
             case 1:
                 return new SortBeerFunction(
                         new Beer.CompareByCountry(ascending));
+            case 2:
+                return new SortBeerFunction(
+                        new Beer.CompareByName(ascending));
             default:
-                throw new IllegalStateException();
+                throw new IllegalStateException(
+                        "There is no sorting method with id " + String
+                                .valueOf(choice));
         }
     }
 }
