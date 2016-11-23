@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="All tests" type="CompoundRunConfigurationType" factoryName="Compound Run Configuration">
+    <toRun type="AndroidTestRunConfigurationType" name="All espresso" />
+    <toRun type="JUnit" name="unit in lib" />
+    <method />
+  </configuration>
+</component>
