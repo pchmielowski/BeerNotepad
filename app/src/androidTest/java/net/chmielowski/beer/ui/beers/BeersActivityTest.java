@@ -92,7 +92,8 @@ public final class BeersActivityTest {
 
         onView(withId(R.id.beers_sp_sort))
                 .perform(click());
-        onView(withText("Name"))
+        onView(withText(
+                mActivityTestRule.getActivity().getString(R.string.name)))
                 .perform(click());
 
         onView(withText("aaa"))
@@ -113,7 +114,8 @@ public final class BeersActivityTest {
 
         onView(withId(R.id.beers_sp_sort))
                 .perform(click());
-        onView(withText("Country"))
+        onView(withText(
+                mActivityTestRule.getActivity().getString(R.string.country)))
                 .perform(click());
 
         onView(withText("from aaa"))
@@ -134,7 +136,8 @@ public final class BeersActivityTest {
 
         onView(withId(R.id.beers_sp_sort))
                 .perform(click());
-        onView(withText("Country"))
+        onView(withText(
+                mActivityTestRule.getActivity().getString(R.string.country)))
                 .perform(click());
         onView(withId(R.id.beers_switch_sort))
                 .perform(click());

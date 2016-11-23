@@ -24,16 +24,19 @@
     <string name="default_rating">3</string>
     <string name="add_new_beer">Add new beer</string>
     <string name="all_beers">All beers</string>
-    <string name="country">Country</string>
+    <string name="Country">Country</string>
 
     <string name="sort">Sort by:</string>
     <string name="ascending">Ascending</string>
     <string name="register">Register</string>
     <string name="fb_storage_addr">gs://beers-541d0.appspot.com</string>
+    <string name="country">country</string>
+    <string name="rating">rating</string>
+    <string name="name">name</string>
 
     <string-array name="sortBy">
-        <item>Rating</item>
-        <item>Country</item>
-        <item>Name</item>
+        <item>@string/rating</item>
+        <item>@string/country</item>
+        <item>@string/name</item>
     </string-array>
 </resources>
