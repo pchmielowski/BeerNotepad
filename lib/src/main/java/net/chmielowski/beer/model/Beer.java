@@ -8,7 +8,7 @@ import java.util.Comparator;
 
 import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"mRating", "mPhoto"})
 public final class Beer {
     private final String mName;
     private final String mCountry;

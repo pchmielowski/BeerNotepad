@@ -46,11 +46,15 @@ final class BeersAdapter
 
     @Override
     public int getItemViewType(final int position) {
-        if (position == mExpanded) {
+        if (hashCodeOf(position) == mExpanded) {
             return 1;
         } else {
             return 0;
         }
+    }
+
+    private int hashCodeOf(final int position) {
+        return mDataset.get(position).hashCode();
     }
 
     @Override
@@ -60,10 +64,10 @@ final class BeersAdapter
         RxView.clicks(holder.itemView).subscribe(new Action1<Void>() {
             @Override
             public void call(final Void aVoid) {
-                if (mExpanded == position) {
+                if (mExpanded == hashCodeOf(position)) {
                     mExpanded = -1;
                 } else {
-                    mExpanded = position;
+                    mExpanded = hashCodeOf(position);
                 }
                 notifyItemChanged(position);
             }
