@@ -127,34 +127,30 @@ final class BeersAdapter
 
         @Override
         public void expand() {
-            final Observable<Void> observable = Observable.<Void>just(null)
-                    .observeOn(AndroidSchedulers.mainThread());
-            observable.subscribe(new Action1<Void>() {
-                @Override
-                public void call(final Void aVoid) {
-                    mStyle.setVisibility(View.VISIBLE);
-                    mCountry.setVisibility(View.VISIBLE);
-                    final float expanded = 2.0f;
-                    mImage.setScaleX(expanded);
-                    mImage.setScaleY(expanded);
-                }
-            });
+            final int visible = View.VISIBLE;
+            final float scale = 2.0f;
+            setApperance(visible, scale);
         }
 
         @Override
         public void collapse() {
-            final Observable<Void> observable = Observable.<Void>just(null)
-                    .observeOn(AndroidSchedulers.mainThread());
-            observable.subscribe(new Action1<Void>() {
-                @Override
-                public void call(final Void aVoid) {
-                    mStyle.setVisibility(View.GONE);
-                    mCountry.setVisibility(View.GONE);
-                    final float collapsed = 1.0f;
-                    mImage.setScaleX(collapsed);
-                    mImage.setScaleY(collapsed);
-                }
-            });
+            final int visibility = View.GONE;
+            final float scale = 1.0f;
+            setApperance(visibility, scale);
+        }
+
+        private void setApperance(final int visibility, final float scale) {
+            Observable.<Void>just(null)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<Void>() {
+                        @Override
+                        public void call(final Void aVoid) {
+                            mStyle.setVisibility(visibility);
+                            mCountry.setVisibility(visibility);
+                            mImage.setScaleX(scale);
+                            mImage.setScaleY(scale);
+                        }
+                    });
         }
     }
 }
