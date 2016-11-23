@@ -2,7 +2,7 @@ package net.chmielowski.beer.model;
 
 import com.google.firebase.storage.FirebaseStorage;
 
-public class FbPhotos {
+public final class FbPhotos {
     private final FirebaseStorage mStorage;
     private final String mUrl;
 

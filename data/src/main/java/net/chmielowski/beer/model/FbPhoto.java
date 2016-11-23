@@ -13,7 +13,7 @@ public final class FbPhoto implements Photo {
     private final String mAddr;
     private final String mId;
 
-    public FbPhoto(final FirebaseStorage storage, final String addr,
+    FbPhoto(final FirebaseStorage storage, final String addr,
             final String id) {
         mStorage = storage;
         mAddr = addr;
