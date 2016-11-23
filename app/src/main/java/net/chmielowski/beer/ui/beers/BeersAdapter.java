@@ -21,41 +21,53 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 final class BeersAdapter
         extends RecyclerView.Adapter<BeersAdapter.BeerViewHolder> {
     private final List<Beer> mDataset = new ArrayList<>();
-    private BeerView mSelected = new NullBeerView();
+    private int mExpanded = -1;
 
     @Override
     public BeerViewHolder onCreateViewHolder(final ViewGroup parent,
             final int viewType) {
-        final View view = LayoutInflater.from(parent.getContext())
-                                        .inflate(R.layout.beer, parent, false);
-        final BeerViewHolder holder = new BeerViewHolder(view);
-        RxView.clicks(view).subscribe(new Action1<Void>() {
-            @Override
-            public void call(final Void aVoid) {
-                select();
-            }
+        final int layout;
+        if (viewType == 0) {
+            layout = R.layout.beer;
+        } else {
+            layout = R.layout.beer_expanded;
 
-            private void select() {
-                mSelected.collapse();
-                mSelected = holder;
-                holder.expand();
-            }
-        });
-        return holder;
+        }
+        final View view = LayoutInflater
+                .from(parent.getContext())
+                .inflate(layout, parent, false);
+        return new BeerViewHolder(view);
+    }
+
+    @Override
+    public int getItemViewType(final int position) {
+        if (position == mExpanded) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
     public void onBindViewHolder(final BeerViewHolder holder,
             final int position) {
         mDataset.get(position).showOn(holder);
-
+        RxView.clicks(holder.itemView).subscribe(new Action1<Void>() {
+            @Override
+            public void call(final Void aVoid) {
+                if (mExpanded == position) {
+                    mExpanded = -1;
+                } else {
+                    mExpanded = position;
+                }
+                notifyItemChanged(position);
+            }
+        });
     }
 
     @Override
@@ -65,30 +77,30 @@ final class BeersAdapter
 
     public void add(final List<Beer> beers) {
         this.mDataset.clear();
+        int i = 0;
         for (final Beer b : beers) {
             this.mDataset.add(b);
+            notifyItemChanged(i++);
         }
-        this.notifyDataSetChanged();
     }
 
     class BeerViewHolder extends RecyclerView.ViewHolder implements BeerView {
-        private final TextView mName;
-        private final TextView mRating;
-        private final TextView mStyle;
-        private final TextView mCountry;
-        private final ProgressBar mProgressBar;
+        @BindView(R.id.beer_tv_name)
+        TextView mName;
+        @BindView(R.id.beer_tv_rating)
+        TextView mRating;
+        @BindView(R.id.beer_tv_style)
+        TextView mStyle;
+        @BindView(R.id.beer_tv_country)
+        TextView mCountry;
+        @BindView(R.id.beer_pb_photo_loads)
+        ProgressBar mProgressBar;
         @BindView(R.id.beer_iv_photo)
         ImageView mImage;
 
         BeerViewHolder(final View v) {
             super(v);
             ButterKnife.bind(this, v);
-            this.mName = (TextView) v.findViewById(R.id.beer_tv_name);
-            this.mRating = (TextView) v.findViewById(R.id.beer_tv_rating);
-            this.mStyle = (TextView) v.findViewById(R.id.beer_tv_style);
-            this.mCountry = (TextView) v.findViewById(R.id.beer_tv_country);
-            this.mProgressBar = (ProgressBar) v.findViewById(
-                    R.id.beer_pb_photo_loads);
         }
 
         @Override
@@ -125,32 +137,5 @@ final class BeersAdapter
             mProgressBar.setVisibility(View.GONE);
         }
 
-        @Override
-        public void expand() {
-            final int visible = View.VISIBLE;
-            final float scale = 2.0f;
-            setApperance(visible, scale);
-        }
-
-        @Override
-        public void collapse() {
-            final int visibility = View.GONE;
-            final float scale = 1.0f;
-            setApperance(visibility, scale);
-        }
-
-        private void setApperance(final int visibility, final float scale) {
-            Observable.<Void>just(null)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Void>() {
-                        @Override
-                        public void call(final Void aVoid) {
-                            mStyle.setVisibility(visibility);
-                            mCountry.setVisibility(visibility);
-                            mImage.setScaleX(scale);
-                            mImage.setScaleY(scale);
-                        }
-                    });
-        }
     }
 }

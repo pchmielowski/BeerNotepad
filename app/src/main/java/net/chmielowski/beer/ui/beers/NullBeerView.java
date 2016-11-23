@@ -11,13 +11,4 @@ class NullBeerView implements BeerView {
 
     }
 
-    @Override
-    public void expand() {
-
-    }
-
-    @Override
-    public void collapse() {
-
-    }
 }
