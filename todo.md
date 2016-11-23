@@ -8,3 +8,4 @@
 - [ ] Logo
 - [x] Beers' picture
 - [ ] CI and coverage 
+- [ ] Caching data
