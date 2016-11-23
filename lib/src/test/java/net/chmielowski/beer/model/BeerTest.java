@@ -27,7 +27,7 @@ public final class BeerTest {
 
         new Beer(name, country, style, rating, mockedPhoto).showOn(mockedView);
 
-        Mockito.verify(mockedView).showBeer(
+        Mockito.verify(mockedView).show(
                 name, rating, style, country, mockedPhoto);
     }
 

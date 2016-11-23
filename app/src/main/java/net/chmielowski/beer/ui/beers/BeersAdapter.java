@@ -1,8 +1,8 @@
 package net.chmielowski.beer.ui.beers;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
+import rx.functions.Func1;
 
 final class BeersAdapter
         extends RecyclerView.Adapter<BeersAdapter.BeerViewHolder> {
@@ -31,17 +32,21 @@ final class BeersAdapter
     @Override
     public BeerViewHolder onCreateViewHolder(final ViewGroup parent,
             final int viewType) {
-        final int layout;
+        return new BeerViewHolder(
+                LayoutInflater
+                        .from(parent.getContext())
+                        .inflate(layout(viewType), parent, false)
+        );
+    }
+
+    private int layout(final int viewType) {
+        int layout;
         if (viewType == 0) {
             layout = R.layout.beer;
         } else {
             layout = R.layout.beer_expanded;
-
         }
-        final View view = LayoutInflater
-                .from(parent.getContext())
-                .inflate(layout, parent, false);
-        return new BeerViewHolder(view);
+        return layout;
     }
 
     @Override
@@ -64,12 +69,16 @@ final class BeersAdapter
         RxView.clicks(holder.itemView).subscribe(new Action1<Void>() {
             @Override
             public void call(final Void aVoid) {
+                updateExpandedIndex();
+                notifyItemChanged(position);
+            }
+
+            private void updateExpandedIndex() {
                 if (mExpanded == hashCodeOf(position)) {
                     mExpanded = -1;
                 } else {
                     mExpanded = hashCodeOf(position);
                 }
-                notifyItemChanged(position);
             }
         });
     }
@@ -108,37 +117,34 @@ final class BeersAdapter
         }
 
         @Override
-        public void showBeer(final String name, final float rating,
+        public void show(
+                final String name,
+                final float rating,
                 final String style,
-                final String country, final Photo photo) {
+                final String country,
+                final Photo photo) {
             this.mName.setText(name);
             this.mRating.setText(String.valueOf(rating));
             this.mStyle.setText(style);
             this.mCountry.setText(country);
-            photo.bytes().subscribe(
-                    new Action1<byte[]>() {
-                        @Override
-                        public void call(final byte[] bytes) {
-                            mImage.setImageBitmap(BitmapFactory.decodeByteArray(
-                                    bytes, 0, bytes.length));
-                            hideProgressBar();
-                            mImage.setVisibility(View.VISIBLE);
-
-                        }
-                    },
-                    new Action1<Throwable>() { // TODO: remove (fail fast!)
-                        @Override
-                        public void call(final Throwable throwable) {
-                            Log.i("show beer::onError", throwable.getMessage());
-                            hideProgressBar();
-                            mImage.setVisibility(View.GONE);
-                        }
-                    }
-            );
-        }
-
-        private void hideProgressBar() {
-            mProgressBar.setVisibility(View.GONE);
+            photo.bytes()
+                 .map(new Func1<byte[], Bitmap>() {
+                     @Override
+                     public Bitmap call(final byte[] bytes) {
+                         return BitmapFactory.decodeByteArray(
+                                 bytes, 0, bytes.length);
+                     }
+                 })
+                 .subscribe(
+                         new Action1<Bitmap>() {
+                             @Override
+                             public void call(final Bitmap bmp) {
+                                 mImage.setImageBitmap(bmp);
+                                 mProgressBar.setVisibility(View.GONE);
+                                 mImage.setVisibility(View.VISIBLE);
+                             }
+                         }
+                 );
         }
 
     }

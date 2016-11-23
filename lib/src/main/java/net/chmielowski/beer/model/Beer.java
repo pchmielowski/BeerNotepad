@@ -26,7 +26,7 @@ public final class Beer {
     }
 
     public BeerView showOn(final BeerView view) {
-        view.showBeer(mName, mRating, mStyle, mCountry, mPhoto);
+        view.show(mName, mRating, mStyle, mCountry, mPhoto);
         return view; // TODO: why is it returning?
     }
 

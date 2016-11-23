@@ -4,7 +4,7 @@ import net.chmielowski.beer.model.Photo;
 
 public interface BeerView {
 
-    void showBeer(String name, float rating,
+    void show(String name, float rating,
             String style,
             String country, Photo photo);
 }
