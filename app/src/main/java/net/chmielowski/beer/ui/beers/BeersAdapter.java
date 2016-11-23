@@ -110,7 +110,7 @@ final class BeersAdapter
 
                         }
                     },
-                    new Action1<Throwable>() {
+                    new Action1<Throwable>() { // TODO: remove (fail fast!)
                         @Override
                         public void call(final Throwable throwable) {
                             Log.i("show beer::onError", throwable.getMessage());
