@@ -2,6 +2,7 @@ package net.chmielowski.beer.ui.beers;
 
 import net.chmielowski.beer.model.Beer;
 import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.Photo;
 import net.chmielowski.beer.model.SortBeerFunction;
 
 import org.junit.Before;
@@ -36,7 +37,8 @@ public class BeersPresenterTest {
     Beers mockedBeers;
     @Mock
     Action1<Func1<List<Beer>, List<Beer>>> mockedAction;
-
+    @Mock
+    Photo mockedPhoto;
     private List<Beer> beers;
 
     private static <T> Observable<T> nonCompletingJust(
@@ -64,14 +66,14 @@ public class BeersPresenterTest {
                         "aaa country",
                         "first style",
                         2.0f,
-                        photo
+                        mockedPhoto
                 ),
                 new Beer(
                         "second name",
                         "bbb country",
                         "second style",
                         1.0f,
-                        photo
+                        mockedPhoto
                 )
         );
     }

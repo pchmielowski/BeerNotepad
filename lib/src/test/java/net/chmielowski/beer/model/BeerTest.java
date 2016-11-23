@@ -19,13 +19,16 @@ public final class BeerTest {
     private final String name = "name";
     @Mock
     BeerView mockedView;
+    @Mock
+    Photo mockedPhoto;
 
     @Test
     public void shows_on_view() throws Exception {
 
-        new Beer(name, country, style, rating, photo).showOn(mockedView);
+        new Beer(name, country, style, rating, mockedPhoto).showOn(mockedView);
 
-        Mockito.verify(mockedView).showBeer(name, rating, style, country);
+        Mockito.verify(mockedView).showBeer(
+                name, rating, style, country, mockedPhoto);
     }
 
     @Test
@@ -37,20 +40,20 @@ public final class BeerTest {
                 new Beer.CompareByCountry(true);
         final int resultLower =
                 rule.compare(
-                        new Beer(name, lower, style, rating, photo),
-                        new Beer(name, higher, style, rating, photo)
+                        new Beer(name, lower, style, rating, mockedPhoto),
+                        new Beer(name, higher, style, rating, mockedPhoto)
                 );
 
         final int resultTheSame =
                 rule.compare(
-                        new Beer(name, lower, style, rating, photo),
-                        new Beer(name, lower, style, rating, photo)
+                        new Beer(name, lower, style, rating, mockedPhoto),
+                        new Beer(name, lower, style, rating, mockedPhoto)
                 );
 
         final int resultHigher =
                 rule.compare(
-                        new Beer(name, higher, style, rating, photo),
-                        new Beer(name, lower, style, rating, photo)
+                        new Beer(name, higher, style, rating, mockedPhoto),
+                        new Beer(name, lower, style, rating, mockedPhoto)
                 );
 
         assertThat(resultLower, is(-1));
@@ -67,20 +70,20 @@ public final class BeerTest {
                 new Beer.CompareByCountry(false);
         final int resultLower =
                 rule.compare(
-                        new Beer(name, higher, style, rating, photo),
-                        new Beer(name, lower, style, rating, photo)
+                        new Beer(name, higher, style, rating, mockedPhoto),
+                        new Beer(name, lower, style, rating, mockedPhoto)
                 );
 
         final int resultTheSame =
                 rule.compare(
-                        new Beer(name, lower, style, rating, photo),
-                        new Beer(name, lower, style, rating, photo)
+                        new Beer(name, lower, style, rating, mockedPhoto),
+                        new Beer(name, lower, style, rating, mockedPhoto)
                 );
 
         final int resultHigher =
                 rule.compare(
-                        new Beer(name, lower, style, rating, photo),
-                        new Beer(name, higher, style, rating, photo)
+                        new Beer(name, lower, style, rating, mockedPhoto),
+                        new Beer(name, higher, style, rating, mockedPhoto)
                 );
 
         assertThat(resultLower, is(-1));
@@ -96,20 +99,20 @@ public final class BeerTest {
         final Beer.CompareByRating rule = new Beer.CompareByRating(true);
         final int resultLower =
                 rule.compare(
-                        new Beer(name, country, style, lower, photo),
-                        new Beer(name, country, style, higher, photo)
+                        new Beer(name, country, style, lower, mockedPhoto),
+                        new Beer(name, country, style, higher, mockedPhoto)
                 );
 
         final int resultTheSame =
                 rule.compare(
-                        new Beer(name, country, style, lower, photo),
-                        new Beer(name, country, style, lower, photo)
+                        new Beer(name, country, style, lower, mockedPhoto),
+                        new Beer(name, country, style, lower, mockedPhoto)
                 );
 
         final int resultHigher =
                 rule.compare(
-                        new Beer(name, country, style, higher, photo),
-                        new Beer(name, country, style, lower, photo)
+                        new Beer(name, country, style, higher, mockedPhoto),
+                        new Beer(name, country, style, lower, mockedPhoto)
                 );
 
         assertThat(resultLower, is(-1));
@@ -125,20 +128,20 @@ public final class BeerTest {
         final Beer.CompareByRating rule = new Beer.CompareByRating(false);
         final int resultLower =
                 rule.compare(
-                        new Beer(name, country, style, higher, photo),
-                        new Beer(name, country, style, lower, photo)
+                        new Beer(name, country, style, higher, mockedPhoto),
+                        new Beer(name, country, style, lower, mockedPhoto)
                 );
 
         final int resultTheSame =
                 rule.compare(
-                        new Beer(name, country, style, lower, photo),
-                        new Beer(name, country, style, lower, photo)
+                        new Beer(name, country, style, lower, mockedPhoto),
+                        new Beer(name, country, style, lower, mockedPhoto)
                 );
 
         final int resultHigher =
                 rule.compare(
-                        new Beer(name, country, style, lower, photo),
-                        new Beer(name, country, style, higher, photo)
+                        new Beer(name, country, style, lower, mockedPhoto),
+                        new Beer(name, country, style, higher, mockedPhoto)
                 );
 
         assertThat(resultLower, is(-1));

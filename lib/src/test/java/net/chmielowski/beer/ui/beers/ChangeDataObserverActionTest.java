@@ -1,8 +1,10 @@
 package net.chmielowski.beer.ui.beers;
 
 import net.chmielowski.beer.model.Beer;
+import net.chmielowski.beer.model.Photo;
 
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
@@ -16,15 +18,20 @@ import static org.mockito.Mockito.times;
 
 public class ChangeDataObserverActionTest {
 
-    final List<Beer> secondFunctionReturn = Arrays.asList(
-            new Beer("d", "d", "d", 4.0f, photo));
-    final List<Beer> firstFunctionReturn = Arrays.asList(
-            new Beer("c", "c", "c", 3.0f, photo));
-    final List<Beer> functionInput = Arrays.asList(
-            new Beer("a", "a", "a", 1.0f, photo), new Beer("b", "b", "b", 2.0f,
-                                                           photo));
     Subject<List<Beer>, List<Beer>>
             mockedEventSource = ReplaySubject.create();
+    @Mock
+    Photo mockedPhoto;
+    final List<Beer> secondFunctionReturn = Arrays.asList(
+            new Beer("d", "d", "d", 4.0f, mockedPhoto));
+    final List<Beer> firstFunctionReturn = Arrays.asList(
+            new Beer("c", "c", "c", 3.0f, mockedPhoto));
+    final List<Beer> functionInput = Arrays.asList(
+            new Beer("a", "a", "a", 1.0f, mockedPhoto),
+            new Beer("b", "b", "b", 2.0f,
+                     mockedPhoto
+            )
+    );
 
     @Test
     public void call() throws Exception {

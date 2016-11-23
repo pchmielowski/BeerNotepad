@@ -64,6 +64,7 @@ public final class Beer {
         }
     }
 
+    @EqualsAndHashCode
     private abstract static class CompareBeer implements Comparator<Beer> {
         final boolean mAscending;
 
@@ -94,6 +95,7 @@ public final class Beer {
         }
     }
 
+    @EqualsAndHashCode(callSuper = true)
     public static final class CompareByName extends CompareBeer {
         public CompareByName(
                 final Boolean ascending) {
