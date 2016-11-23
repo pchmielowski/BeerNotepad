@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertThat;
 
 public class IterableToListTest {
 
+    FbPhotos mockedPhotos;
     private FbBeers.StructBeer firstBeerAsStruct;
     private Beer firstBeerAsObject;
     private FbBeers.StructBeer secondBeerAsStruct;
@@ -38,6 +40,8 @@ public class IterableToListTest {
         secondBeerAsStruct.mRating = 4.4f;
         secondBeerAsStruct.mStyle = "style2";
         secondBeerAsObject = objectBeer(secondBeerAsStruct);
+
+        mockedPhotos= Mockito.mock(FbPhotos.class);
     }
 
     @NonNull
@@ -47,13 +51,13 @@ public class IterableToListTest {
                 struct.mCountry,
                 struct.mStyle,
                 struct.mRating,
-                photo
+                Mockito.mock(Photo.class)
         );
     }
 
     @Test
     public void one_beer() throws Exception {
-        final List<Beer> result = new FbBeers.IterableToList(photos).call(
+        final List<Beer> result = new FbBeers.IterableToList(mockedPhotos).call(
                 Collections.singletonList(
                         mockedSnapshot(firstBeerAsStruct)));
 
@@ -66,7 +70,7 @@ public class IterableToListTest {
 
     @Test
     public void few_beers() throws Exception {
-        final List<Beer> result = new FbBeers.IterableToList(photos).call(
+        final List<Beer> result = new FbBeers.IterableToList(mockedPhotos).call(
                 Arrays.asList(
                         mockedSnapshot(firstBeerAsStruct),
                         mockedSnapshot(secondBeerAsStruct)

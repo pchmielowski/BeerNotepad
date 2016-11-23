@@ -2,9 +2,11 @@ package net.chmielowski.beer;
 
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.storage.FirebaseStorage;
 
 import net.chmielowski.beer.login.User;
 import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.Photo;
 
 import org.mockito.Mockito;
 
@@ -33,5 +35,17 @@ public final class MockModule {
     @Provides
     User provideFirebaseUser(final FirebaseAuth auth) {
         return Mockito.mock(User.class);
+    }
+    
+    @Singleton
+    @Provides
+    FirebaseStorage provideStorage() {
+        return FirebaseStorage.getInstance();
+    }
+
+    @Singleton
+    @Provides
+    Photo providePhoto(final FirebaseStorage storage) {
+        return Mockito.mock(Photo.class);
     }
 }

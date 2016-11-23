@@ -11,6 +11,7 @@ import net.chmielowski.beer.R;
 import net.chmielowski.beer.TestComponent;
 import net.chmielowski.beer.model.Beer;
 import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.Photo;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,6 +44,7 @@ public final class BeersActivityTest {
             new ActivityTestRule<>(BeersActivity.class, true, false);
     @Inject
     Beers mockedBeers;
+    Photo mockedPhoto;
 
     @Before
     public void setUp() {
@@ -52,14 +54,15 @@ public final class BeersActivityTest {
                 .getTargetContext().getApplicationContext();
         TestComponent component = (TestComponent) app.cachedComponent();
         component.inject(this);
+        mockedPhoto = Mockito.mock(Photo.class);
     }
 
     @Test
     public void sorted_by_rating_ascending() {
         ReplaySubject<List<Beer>> subject = ReplaySubject.create();
         subject.onNext(Arrays.asList(
-                new Beer("bbb", "c1", "s1", 0.0f, photo),
-                new Beer("aaa", "c2", "s2", 1.0f, photo)
+                new Beer("bbb", "c1", "s1", 0.0f, mockedPhoto),
+                new Beer("aaa", "c2", "s2", 1.0f, mockedPhoto)
         ));
         Mockito.when(mockedBeers.list())
                .thenReturn(subject);
@@ -74,8 +77,8 @@ public final class BeersActivityTest {
     public void sorted_by_country_descending() {
         ReplaySubject<List<Beer>> subject = ReplaySubject.create();
         subject.onNext(Arrays.asList(
-                new Beer("from bbb", "Czechy", "s1", 0.0f, photo),
-                new Beer("from aaa", "Austria", "s2", 1.0f, photo)
+                new Beer("from bbb", "Czechy", "s1", 0.0f, mockedPhoto),
+                new Beer("from aaa", "Austria", "s2", 1.0f, mockedPhoto)
         ));
         Mockito.when(mockedBeers.list())
                .thenReturn(subject);
@@ -95,8 +98,8 @@ public final class BeersActivityTest {
     public void sorted_by_country_order_change() {
         ReplaySubject<List<Beer>> subject = ReplaySubject.create();
         subject.onNext(Arrays.asList(
-                new Beer("from bbb", "Czechy", "s1", 0.0f, photo),
-                new Beer("from aaa", "Austria", "s2", 1.0f, photo)
+                new Beer("from bbb", "Czechy", "s1", 0.0f, mockedPhoto),
+                new Beer("from aaa", "Austria", "s2", 1.0f, mockedPhoto)
         ));
         Mockito.when(mockedBeers.list())
                .thenReturn(subject);

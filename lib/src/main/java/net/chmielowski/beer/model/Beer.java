@@ -30,33 +30,29 @@ public final class Beer {
         return view; // TODO: why is it returning?
     }
 
-    @EqualsAndHashCode
-    public static final class CompareByCountry implements Comparator<Beer> {
-        private final boolean mAscending;
+    @EqualsAndHashCode(callSuper = true)
+    public static final class CompareByCountry extends CompareBeer {
 
         public CompareByCountry(final boolean ascending) {
-            mAscending = ascending;
+            super(ascending);
         }
 
         @Override
         public int compare(final Beer first, final Beer second) {
-            return new Inverted(
-                    new Normalized(
-                            first.mCountry.compareTo(second.mCountry)
-                    ).value(),
-                    !mAscending
+            return new CompareStrings(
+                    first.mCountry,
+                    second.mCountry,
+                    mAscending
             ).value();
-
         }
 
     }
 
-    @EqualsAndHashCode
-    public static final class CompareByRating implements Comparator<Beer> {
-        private final boolean mAscending;
+    @EqualsAndHashCode(callSuper = true)
+    public static final class CompareByRating extends CompareBeer {
 
         public CompareByRating(final boolean ascending) {
-            mAscending = ascending;
+            super(ascending);
         }
 
         @Override
@@ -68,4 +64,33 @@ public final class Beer {
         }
     }
 
+    private abstract static class CompareBeer implements Comparator<Beer> {
+        final boolean mAscending;
+
+        CompareBeer(final boolean ascending) {
+            mAscending = ascending;
+        }
+    }
+
+    private static class CompareStrings {
+        private final String mFirst;
+        private final String mSecond;
+        private final boolean mAscending;
+
+        CompareStrings(final String first, final String second,
+                final boolean ascending) {
+            mFirst = first;
+            mSecond = second;
+            mAscending = ascending;
+        }
+
+        private int value() {
+            return new Inverted(
+                    new Normalized(
+                            mFirst.compareTo(mSecond)
+                    ).value(),
+                    !mAscending
+            ).value();
+        }
+    }
 }
