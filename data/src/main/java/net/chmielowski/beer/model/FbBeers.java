@@ -70,7 +70,6 @@ public final class FbBeers implements Beers {
 
         @Override
         public List<Beer> call(final Iterable<DataSnapshot> dataSnapshots) {
-            // CHECKSTYLE:OFF
             List<Beer> beers = new LinkedList<Beer>();
             for (DataSnapshot s : dataSnapshots) {
                 final StructBeer beer = s.getValue(StructBeer.class);
@@ -84,7 +83,6 @@ public final class FbBeers implements Beers {
                         ));
             }
             return beers;
-            // CHECKSTYLE:ON
         }
 
     }
