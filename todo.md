@@ -8,5 +8,6 @@
 - [ ] Logo
 - [x] Beers' picture
 - [ ] CI and coverage 
+- [x] Caching photos
 - [ ] Caching data
 - [ ] Demo mode (without login)

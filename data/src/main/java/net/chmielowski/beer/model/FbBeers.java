@@ -14,9 +14,9 @@ import rx.subjects.ReplaySubject;
 public final class FbBeers implements Beers {
 
     private final DatabaseReference mDatabase;
-    private final FbPhotos mPhotos;
+    private final Photos mPhotos;
 
-    public FbBeers(final DatabaseReference ref, final FbPhotos photos) {
+    public FbBeers(final DatabaseReference ref, final Photos photos) {
         mDatabase = ref;
         mPhotos = photos;
     }
@@ -43,9 +43,9 @@ public final class FbBeers implements Beers {
     private static class SnapshotToListObservable
             implements Func1<DataSnapshot, Observable<List<Beer>>> {
 
-        private final FbPhotos mPhotos;
+        private final Photos mPhotos;
 
-        SnapshotToListObservable(final FbPhotos photos) {
+        SnapshotToListObservable(final Photos photos) {
             mPhotos = photos;
         }
 
@@ -62,15 +62,15 @@ public final class FbBeers implements Beers {
     static class IterableToList
             implements Func1<Iterable<DataSnapshot>, List<Beer>> {
 
-        private final FbPhotos mPhotos;
+        private final Photos mPhotos;
 
-        IterableToList(final FbPhotos photos) {
+        IterableToList(final Photos photos) {
             mPhotos = photos;
         }
 
         @Override
         public List<Beer> call(final Iterable<DataSnapshot> dataSnapshots) {
-            List<Beer> beers = new LinkedList<Beer>();
+            List<Beer> beers = new LinkedList<>();
             for (DataSnapshot s : dataSnapshots) {
                 final StructBeer beer = s.getValue(StructBeer.class);
                 beers.add(

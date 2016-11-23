@@ -2,7 +2,7 @@ package net.chmielowski.beer.model;
 
 import com.google.firebase.storage.FirebaseStorage;
 
-public final class FbPhotos {
+public final class FbPhotos implements Photos {
     private final FirebaseStorage mStorage;
     private final String mUrl;
 
@@ -11,7 +11,8 @@ public final class FbPhotos {
         mUrl = url;
     }
 
-    Photo photo(final String id) {
+    @Override
+    public Photo photo(final String id) {
         return new FbPhoto(
                 mStorage,
                 mUrl,

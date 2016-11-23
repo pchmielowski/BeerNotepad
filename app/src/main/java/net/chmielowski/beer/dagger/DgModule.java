@@ -7,6 +7,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import net.chmielowski.beer.login.FbUser;
 import net.chmielowski.beer.login.User;
 import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.CachedPhotos;
 import net.chmielowski.beer.model.FbBeers;
 import net.chmielowski.beer.model.FbPhoto;
 import net.chmielowski.beer.model.FbPhotos;
@@ -47,10 +48,11 @@ public final class DgModule {
                 FirebaseDatabase.getInstance()
                                 .getReference()
                                 .child(user.uid()),
-                new FbPhotos(
-                        storage,
-                        STORAGE_URL
-                )
+                new CachedPhotos(
+                        new FbPhotos(
+                                storage,
+                                STORAGE_URL
+                        ))
         );
     }
 
