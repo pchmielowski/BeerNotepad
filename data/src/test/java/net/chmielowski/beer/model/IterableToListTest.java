@@ -6,7 +6,6 @@ import com.google.firebase.database.DataSnapshot;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
@@ -41,7 +40,7 @@ public class IterableToListTest {
         secondBeerAsStruct.mStyle = "style2";
         secondBeerAsObject = objectBeer(secondBeerAsStruct);
 
-        mockedPhotos= Mockito.mock(FbPhotos.class);
+        mockedPhotos = Mockito.mock(FbPhotos.class);
     }
 
     @NonNull

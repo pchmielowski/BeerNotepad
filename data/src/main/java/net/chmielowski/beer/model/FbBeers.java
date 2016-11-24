@@ -24,7 +24,7 @@ public final class FbBeers implements Beers {
     @Override
     public Observable<List<Beer>> list() {
         return RxFirebaseDatabase
-                .observeSingleValueEvent(mDatabase)
+                .observeValueEvent(mDatabase)
                 .flatMap(new SnapshotToListObservable(mPhotos));
     }
 

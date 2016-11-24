@@ -25,7 +25,7 @@ public final class BeersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_beers);
         ((BeerApplication) getApplication()).cachedComponent().inject(this);
         final BasicBeersView view = new BasicBeersView(this);
-        new BeersPresenter(
+        new BeerListPresenter(
                 view,
                 new ChangeDataObserverAction(
                         mBeers.list(),

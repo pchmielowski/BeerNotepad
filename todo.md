@@ -5,7 +5,7 @@
 - [ ] Better look
 - [ ] Google Play
 - [ ] Video + screenshots
-- [ ] Logo
+- [x] Logo
 - [x] Beers' picture
 - [ ] CI and coverage 
 - [x] Caching photos
