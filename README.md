@@ -31,3 +31,5 @@ Allows user to create an account, log in and keep all information in a cloud ser
   * Lightweight `Activities` - view logic in separate `*View` classes
 * Almost all classes immutable (excluding Activities etc.)
 * Dagger2 dependency injection in `Activities` and Espresso tests, plain constructor injection in other classes
+* Screen-related packages: all `Activity`, `Adapter`, `View`, `Presenter` etc classes related with one screen in one package.
+This approach allow me to make more classes and methods package-private.
