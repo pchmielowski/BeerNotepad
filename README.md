@@ -1,5 +1,9 @@
 # BeerNotepad
 
+![screenshot1](graphics/Screenshot_20161124-155238.png)
+![screenshot2](graphics/Screenshot_20161124-155320.png)
+![screenshot3](graphics/Screenshot_20161124-155400.png)
+
 A simple Android application to keep information and rating of tasted beers.
 Allows user to create an account, log in and keep all information in a cloud service.
 
