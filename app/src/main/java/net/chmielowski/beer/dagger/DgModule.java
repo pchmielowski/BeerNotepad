@@ -8,6 +8,7 @@ import net.chmielowski.beer.login.FbUser;
 import net.chmielowski.beer.login.User;
 import net.chmielowski.beer.model.AddBeers;
 import net.chmielowski.beer.model.CachedPhotos;
+import net.chmielowski.beer.model.FbAddBeers;
 import net.chmielowski.beer.model.FbPhoto;
 import net.chmielowski.beer.model.FbPhotos;
 import net.chmielowski.beer.model.FbReadBeers;
@@ -59,17 +60,11 @@ public final class DgModule {
     }
 
     @Provides
-    AddBeers provideAddBeers(final User user,
-            final FirebaseStorage storage) {
-        return new FbReadBeers(
+    AddBeers provideAddBeers(final User user) {
+        return new FbAddBeers(
                 FirebaseDatabase.getInstance()
                                 .getReference()
-                                .child(user.uid()),
-                new CachedPhotos(
-                        new FbPhotos(
-                                storage,
-                                STORAGE_URL
-                        ))
+                                .child(user.uid())
         );
     }
 

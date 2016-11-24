@@ -10,7 +10,7 @@ import java.util.List;
 import rx.Observable;
 import rx.functions.Func1;
 
-public final class FbReadBeers implements ReadBeers, AddBeers {
+public final class FbReadBeers implements ReadBeers {
 
     private final DatabaseReference mDatabase;
     private final Photos mPhotos;
@@ -26,18 +26,6 @@ public final class FbReadBeers implements ReadBeers, AddBeers {
                 .observeValueEvent(mDatabase)
                 .map(new GetChildren())
                 .map(new IterableToList(mPhotos));
-    }
-
-    @Override
-    public void add(final String name, final String country, final String style,
-            final float rating, final String photo) {
-        final StructBeer beer = new StructBeer();
-        beer.mName = name;
-        beer.mCountry = country;
-        beer.mStyle = style;
-        beer.mRating = rating;
-        beer.mPhoto = photo;
-        mDatabase.push().setValue(beer);
     }
 
     static class IterableToList
