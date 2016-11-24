@@ -9,7 +9,6 @@ import java.util.List;
 
 import rx.Observable;
 import rx.functions.Func1;
-import rx.subjects.ReplaySubject;
 
 public final class FbBeers implements Beers {
 
@@ -25,7 +24,8 @@ public final class FbBeers implements Beers {
     public Observable<List<Beer>> list() {
         return RxFirebaseDatabase
                 .observeValueEvent(mDatabase)
-                .flatMap(new SnapshotToListObservable(mPhotos));
+                .map(new GetChildren())
+                .map(new IterableToList(mPhotos));
     }
 
     @Override
@@ -38,25 +38,6 @@ public final class FbBeers implements Beers {
         beer.mRating = rating;
         beer.mPhoto = photo;
         mDatabase.push().setValue(beer);
-    }
-
-    private static class SnapshotToListObservable
-            implements Func1<DataSnapshot, Observable<List<Beer>>> {
-
-        private final Photos mPhotos;
-
-        SnapshotToListObservable(final Photos photos) {
-            mPhotos = photos;
-        }
-
-        @Override
-        public Observable<List<Beer>> call(final DataSnapshot snapshot) {
-            ReplaySubject<Iterable<DataSnapshot>> subject =
-                    ReplaySubject.create();
-            subject.onNext(snapshot.getChildren());
-            return subject.map(new IterableToList(mPhotos));
-        }
-
     }
 
     static class IterableToList
@@ -95,4 +76,12 @@ public final class FbBeers implements Beers {
         String mPhoto;
     }
 
+    private static class GetChildren
+            implements Func1<DataSnapshot, Iterable<DataSnapshot>> {
+        @Override
+        public Iterable<DataSnapshot> call(
+                final DataSnapshot snapshot) {
+            return snapshot.getChildren();
+        }
+    }
 }
