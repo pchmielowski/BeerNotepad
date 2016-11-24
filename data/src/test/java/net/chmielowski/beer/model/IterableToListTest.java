@@ -18,14 +18,14 @@ import static org.junit.Assert.assertThat;
 public class IterableToListTest {
 
     FbPhotos mockedPhotos;
-    private FbBeers.StructBeer firstBeerAsStruct;
+    private FbReadBeers.StructBeer firstBeerAsStruct;
     private Beer firstBeerAsObject;
-    private FbBeers.StructBeer secondBeerAsStruct;
+    private FbReadBeers.StructBeer secondBeerAsStruct;
     private Beer secondBeerAsObject;
 
     @Before
     public void setUp() throws Exception {
-        firstBeerAsStruct = new FbBeers.StructBeer();
+        firstBeerAsStruct = new FbReadBeers.StructBeer();
         firstBeerAsStruct.mCountry = "country";
         firstBeerAsStruct.mName = "name";
 
@@ -33,7 +33,7 @@ public class IterableToListTest {
         firstBeerAsStruct.mStyle = "style";
         firstBeerAsObject = objectBeer(firstBeerAsStruct);
 
-        secondBeerAsStruct = new FbBeers.StructBeer();
+        secondBeerAsStruct = new FbReadBeers.StructBeer();
         secondBeerAsStruct.mCountry = "country2";
         secondBeerAsStruct.mName = "name2";
         secondBeerAsStruct.mRating = 4.4f;
@@ -44,7 +44,7 @@ public class IterableToListTest {
     }
 
     @NonNull
-    private Beer objectBeer(final FbBeers.StructBeer struct) {
+    private Beer objectBeer(final FbReadBeers.StructBeer struct) {
         return new Beer(
                 struct.mName,
                 struct.mCountry,
@@ -56,9 +56,10 @@ public class IterableToListTest {
 
     @Test
     public void one_beer() throws Exception {
-        final List<Beer> result = new FbBeers.IterableToList(mockedPhotos).call(
-                Collections.singletonList(
-                        mockedSnapshot(firstBeerAsStruct)));
+        final List<Beer> result = new FbReadBeers.IterableToList(mockedPhotos)
+                .call(
+                        Collections.singletonList(
+                                mockedSnapshot(firstBeerAsStruct)));
 
         assertThat(
                 result,
@@ -69,11 +70,12 @@ public class IterableToListTest {
 
     @Test
     public void few_beers() throws Exception {
-        final List<Beer> result = new FbBeers.IterableToList(mockedPhotos).call(
-                Arrays.asList(
-                        mockedSnapshot(firstBeerAsStruct),
-                        mockedSnapshot(secondBeerAsStruct)
-                ));
+        final List<Beer> result = new FbReadBeers.IterableToList(mockedPhotos)
+                .call(
+                        Arrays.asList(
+                                mockedSnapshot(firstBeerAsStruct),
+                                mockedSnapshot(secondBeerAsStruct)
+                        ));
 
         assertThat(
                 result,
@@ -83,11 +85,12 @@ public class IterableToListTest {
     }
 
     @NonNull
-    private DataSnapshot mockedSnapshot(final FbBeers.StructBeer structBeer) {
+    private DataSnapshot mockedSnapshot(
+            final FbReadBeers.StructBeer structBeer) {
         final DataSnapshot mock = Mockito.mock(
                 DataSnapshot.class);
         Mockito.when(mock.getValue(
-                (Class<FbBeers.StructBeer>) Mockito.any()))
+                (Class<FbReadBeers.StructBeer>) Mockito.any()))
                .thenReturn(structBeer);
         return mock;
     }

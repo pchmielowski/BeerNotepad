@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import net.chmielowski.beer.BeerApplication;
 import net.chmielowski.beer.R;
-import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.AddBeers;
 import net.chmielowski.beer.model.Photo;
 
 import java.io.ByteArrayOutputStream;
@@ -23,7 +23,7 @@ import rx.functions.Action1;
 public final class AddBeerActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     @Inject
-    Beers mBeers;
+    AddBeers mBeers;
     @Inject
     Photo mPhoto;
 

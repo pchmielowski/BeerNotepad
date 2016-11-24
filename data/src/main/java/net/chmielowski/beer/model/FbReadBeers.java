@@ -10,12 +10,12 @@ import java.util.List;
 import rx.Observable;
 import rx.functions.Func1;
 
-public final class FbBeers implements Beers {
+public final class FbReadBeers implements ReadBeers, AddBeers {
 
     private final DatabaseReference mDatabase;
     private final Photos mPhotos;
 
-    public FbBeers(final DatabaseReference ref, final Photos photos) {
+    public FbReadBeers(final DatabaseReference ref, final Photos photos) {
         mDatabase = ref;
         mPhotos = photos;
     }

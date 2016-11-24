@@ -5,8 +5,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 
 import net.chmielowski.beer.login.User;
-import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.AddBeers;
 import net.chmielowski.beer.model.Photo;
+import net.chmielowski.beer.model.ReadBeers;
 
 import org.mockito.Mockito;
 
@@ -27,8 +28,14 @@ public final class MockModule {
 
     @Singleton
     @Provides
-    Beers provideFireBaseBeers(final FirebaseAuth auth) {
-        return Mockito.mock(Beers.class);
+    ReadBeers provideFireBaseBeers(final FirebaseAuth auth) {
+        return Mockito.mock(ReadBeers.class);
+    }
+
+    @Singleton
+    @Provides
+    AddBeers provideAddBeers() {
+        return Mockito.mock(AddBeers.class);
     }
 
     @Singleton

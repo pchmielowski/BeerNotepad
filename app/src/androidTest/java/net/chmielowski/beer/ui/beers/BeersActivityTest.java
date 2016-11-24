@@ -10,7 +10,7 @@ import net.chmielowski.beer.BeerApplication;
 import net.chmielowski.beer.R;
 import net.chmielowski.beer.TestComponent;
 import net.chmielowski.beer.model.Beer;
-import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.ReadBeers;
 import net.chmielowski.beer.model.Photo;
 
 import org.junit.Before;
@@ -45,7 +45,7 @@ public final class BeersActivityTest {
     public ActivityTestRule<BeersActivity> mActivityTestRule =
             new ActivityTestRule<>(BeersActivity.class, true, false);
     @Inject
-    Beers mockedBeers;
+    ReadBeers mockedBeers;
     Photo mockedPhoto;
 
     @Before

@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import net.chmielowski.beer.BeerApplication;
 import net.chmielowski.beer.R;
-import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.ReadBeers;
 import net.chmielowski.beer.ui.addbeer.AddBeerActivity;
 
 import javax.inject.Inject;
@@ -17,7 +17,7 @@ import rx.functions.Action1;
 public final class BeersActivity extends AppCompatActivity {
 
     @Inject
-    Beers mBeers;
+    ReadBeers mBeers;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {

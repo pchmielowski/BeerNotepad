@@ -1,7 +1,7 @@
 package net.chmielowski.beer.ui.beers;
 
 import net.chmielowski.beer.model.Beer;
-import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.ReadBeers;
 import net.chmielowski.beer.model.Photo;
 import net.chmielowski.beer.model.SortBeerFunction;
 
@@ -34,7 +34,7 @@ public class BeerListPresenterTest {
     @Mock
     BeersView mockedView;
     @Mock
-    Beers mockedBeers;
+    ReadBeers mockedBeers;
     @Mock
     Action1<Func1<List<Beer>, List<Beer>>> mockedAction;
     @Mock

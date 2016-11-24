@@ -1,12 +1,6 @@
 package net.chmielowski.beer.model;
 
-import java.util.List;
-
-import rx.Observable;
-
-public interface Beers {
-    Observable<List<Beer>> list();
-
+public interface AddBeers {
     void add(String name, String country, String style, float rating,
             String photo);
 }

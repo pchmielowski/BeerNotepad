@@ -6,12 +6,13 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import net.chmielowski.beer.login.FbUser;
 import net.chmielowski.beer.login.User;
-import net.chmielowski.beer.model.Beers;
+import net.chmielowski.beer.model.AddBeers;
 import net.chmielowski.beer.model.CachedPhotos;
-import net.chmielowski.beer.model.FbBeers;
 import net.chmielowski.beer.model.FbPhoto;
 import net.chmielowski.beer.model.FbPhotos;
+import net.chmielowski.beer.model.FbReadBeers;
 import net.chmielowski.beer.model.Photo;
+import net.chmielowski.beer.model.ReadBeers;
 
 import javax.inject.Singleton;
 
@@ -43,8 +44,24 @@ public final class DgModule {
 
     @Singleton// TODO: check if is necessary
     @Provides
-    Beers provideFireBaseBeers(final User user, final FirebaseStorage storage) {
-        return new FbBeers(
+    ReadBeers provideFireBaseBeers(final User user,
+            final FirebaseStorage storage) {
+        return new FbReadBeers(
+                FirebaseDatabase.getInstance()
+                                .getReference()
+                                .child(user.uid()),
+                new CachedPhotos(
+                        new FbPhotos(
+                                storage,
+                                STORAGE_URL
+                        ))
+        );
+    }
+
+    @Provides
+    AddBeers provideAddBeers(final User user,
+            final FirebaseStorage storage) {
+        return new FbReadBeers(
                 FirebaseDatabase.getInstance()
                                 .getReference()
                                 .child(user.uid()),
