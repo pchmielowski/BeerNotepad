@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BeersPresenterTest {
+public class BeerListPresenterTest {
 
     @Mock
     BeersView mockedView;
@@ -78,8 +78,8 @@ public class BeersPresenterTest {
         );
     }
 
-    private BeersPresenter createBeersPresenter() {
-        return new BeersPresenter(mockedView, new ChangeDataObserverAction(
+    private BeerListPresenter createBeersPresenter() {
+        return new BeerListPresenter(mockedView, new ChangeDataObserverAction(
                 mockedBeers.list(),
                 new ShowBeersAction(mockedView)
         ));
@@ -131,7 +131,7 @@ public class BeersPresenterTest {
         when(mockedView.sortingAscending()).thenReturn(
                 nonCompletingJust(true));
 
-        new BeersPresenter(mockedView, mockedAction);
+        new BeerListPresenter(mockedView, mockedAction);
 
         InOrder order = inOrder(mockedAction);
         order.verify(mockedAction, times(1)).call(
@@ -151,7 +151,7 @@ public class BeersPresenterTest {
         when(mockedView.sortingAscending()).thenReturn(
                 nonCompletingJust(false));
 
-        new BeersPresenter(mockedView, mockedAction);
+        new BeerListPresenter(mockedView, mockedAction);
 
         InOrder order = inOrder(mockedAction);
         order.verify(mockedAction, times(1)).call(

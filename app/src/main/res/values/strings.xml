@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Beer</string>
+    <string name="app_name">Beer Diary</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

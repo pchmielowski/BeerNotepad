@@ -36,7 +36,7 @@ public final class MockModule {
     User provideFirebaseUser(final FirebaseAuth auth) {
         return Mockito.mock(User.class);
     }
-    
+
     @Singleton
     @Provides
     FirebaseStorage provideStorage() {
