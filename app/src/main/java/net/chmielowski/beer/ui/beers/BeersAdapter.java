@@ -90,11 +90,10 @@ final class BeersAdapter
 
     public void add(final List<Beer> beers) {
         this.mDataset.clear();
-        int i = 0;
         for (final Beer b : beers) {
             this.mDataset.add(b);
-            notifyItemChanged(i++);
         }
+        notifyDataSetChanged();
     }
 
     class BeerViewHolder extends RecyclerView.ViewHolder implements BeerView {
