@@ -8,9 +8,9 @@ import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-final class BeersPresenter {
+final class BeerListPresenter {
 
-    BeersPresenter(final BeersView view,
+    BeerListPresenter(final BeersView view,
             final Action1<Func1<List<Beer>, List<Beer>>> action) {
         view.showLoading(true);
 
