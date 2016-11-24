@@ -1,11 +1,11 @@
 # BeerNotepad
 
-![screenshot1](graphics/Screenshot_20161124-155238.png)
-![screenshot2](graphics/Screenshot_20161124-155320.png)
-![screenshot3](graphics/Screenshot_20161124-155400.png)
-
 A simple Android application to keep information and rating of tasted beers.
 Allows user to create an account, log in and keep all information in a cloud service.
+
+<img src=graphics/Screenshot_20161124-155238.png width=150 />
+<img src=graphics/Screenshot_20161124-155320.png width=150 />
+<img src=graphics/Screenshot_20161124-155400.png width=150 />
 
 ## Used technologies
 
@@ -29,5 +29,5 @@ Allows user to create an account, log in and keep all information in a cloud ser
 
 * Usage of MVP pattern
   * Lightweight `Activities` - view logic in separate `*View` classes
-* Almost all classes immutable
+* Almost all classes immutable (excluding Activities etc.)
 * Dagger2 dependency injection in `Activities` and Espresso tests, plain constructor injection in other classes
