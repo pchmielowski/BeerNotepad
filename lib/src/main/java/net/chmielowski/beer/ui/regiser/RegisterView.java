@@ -9,5 +9,7 @@ interface RegisterView {
 
     String password();
 
+    String passwordRepeated();
+
     void showError(String message);
 }

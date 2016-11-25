@@ -11,6 +11,10 @@ final class RegisterPresenter {
         view.registerButtonClicked().subscribe(new Action1<Void>() {
             @Override
             public void call(final Void aVoid) {
+                if (!view.password().equals(view.passwordRepeated())) {
+                    view.showError("Passwords do not match");
+                    return;
+                }
                 user.register(
                         view.email(),
                         view.password()

@@ -43,6 +43,8 @@ public final class RegisterActivity extends Activity {
         EditText mEmail;
         @BindView(R.id.register_et_password)
         EditText mPassword;
+        @BindView(R.id.register_et_password_rep)
+        EditText mPasswordRep;
 
         BasicRegisterView(
                 final RegisterActivity activity) {
@@ -63,6 +65,11 @@ public final class RegisterActivity extends Activity {
         @Override
         public String password() {
             return String.valueOf(mPassword.getText());
+        }
+
+        @Override
+        public String passwordRepeated() {
+            return String.valueOf(mPasswordRep.getText());
         }
 
         @Override
