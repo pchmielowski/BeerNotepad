@@ -41,4 +41,6 @@
         <item>@string/country</item>
         <item>@string/name</item>
     </string-array>
+
+    <string name="facebook_app_id">1861910767387661</string>
 </resources>

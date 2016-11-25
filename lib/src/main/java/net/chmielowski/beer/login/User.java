@@ -8,4 +8,6 @@ public interface User {
     Observable<Boolean> login(String name, String passwd);
 
     Observable<Boolean> register(String email, String password);
+
+    Observable<Boolean> login(Object credential);
 }

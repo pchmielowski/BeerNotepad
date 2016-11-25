@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.kelvinapps.rxfirebase.RxFirebaseAuth;
@@ -38,13 +39,17 @@ public final class FbUser implements User {
             final String password) {
         return RxFirebaseAuth
                 .createUserWithEmailAndPassword(mAuth, email, password)
-                .map(new Func1<AuthResult, Boolean>() {
-                    @Override
-                    public Boolean call(final AuthResult authResult) {
-                        final boolean success = authResult.getUser() != null;
-                        return success;
-                    }
-                });
+                .map(new AuthResultBooleanFunc());
+    }
+
+    @Override
+    public Observable<Boolean> login(final Object credential) {
+        if (!(credential instanceof AuthCredential)) {
+            throw new Error("credential is not instance of AuthCredential");
+        }
+        return RxFirebaseAuth
+                .signInWithCredential(mAuth, (AuthCredential) credential)
+                .map(new AuthResultBooleanFunc());
     }
 
     private static class ResultObservable
@@ -58,6 +63,14 @@ public final class FbUser implements User {
         @Override
         public void onComplete(@NonNull final Task<AuthResult> task) {
             mStatus.onNext(task.isSuccessful());
+        }
+    }
+
+    private static class AuthResultBooleanFunc
+            implements Func1<AuthResult, Boolean> {
+        @Override
+        public Boolean call(final AuthResult authResult) {
+            return authResult.getUser() != null;
         }
     }
 }
