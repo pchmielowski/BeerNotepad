@@ -2,7 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'com.neenbedankt.android-apt'
 
-apply from: project.property("Beer.signing") + ".gradle";
+if(project.hasProperty("Beer.signing")
+        && new File(project.property("Beer.signing") + ".gradle").exists()) {
+    apply from: project.property("Beer.signing") + ".gradle";
+}
 
 android {
     compileSdkVersion 25
