@@ -43,4 +43,5 @@
     </string-array>
 
     <string name="facebook_app_id">1861910767387661</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -30,7 +30,7 @@
         </activity>
         <activity
             android:name=".ui.beers.BeersActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
         <activity android:name=".ui.addbeer.AddBeerActivity"/>
         <activity android:name=".ui.regiser.RegisterActivity"/>
     </application>

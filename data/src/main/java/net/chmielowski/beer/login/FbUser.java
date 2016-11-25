@@ -52,6 +52,11 @@ public final class FbUser implements User {
                 .map(new AuthResultBooleanFunc());
     }
 
+    @Override
+    public void logout() {
+        mAuth.signOut();
+    }
+
     private static class ResultObservable
             implements OnCompleteListener<AuthResult> {
         private final PublishSubject<Boolean> mStatus;

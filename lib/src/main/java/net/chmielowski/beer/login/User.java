@@ -10,4 +10,6 @@ public interface User {
     Observable<Boolean> register(String email, String password);
 
     Observable<Boolean> login(Object credential);
+
+    void logout();
 }
