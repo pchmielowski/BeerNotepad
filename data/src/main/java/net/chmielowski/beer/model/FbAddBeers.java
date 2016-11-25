@@ -13,7 +13,7 @@ public final class FbAddBeers implements AddBeers {
     @Override
     public void add(final String name, final String country, final String style,
             final float rating, final String photo) {
-        final FbReadBeers.StructBeer beer = new FbReadBeers.StructBeer();
+        final StructBeer beer = new StructBeer();
         beer.mName = name;
         beer.mCountry = country;
         beer.mStyle = style;

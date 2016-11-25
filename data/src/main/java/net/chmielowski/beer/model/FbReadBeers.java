@@ -56,14 +56,6 @@ public final class FbReadBeers implements ReadBeers {
 
     }
 
-    static final class StructBeer {
-        String mName;
-        String mCountry;
-        String mStyle;
-        float mRating;
-        String mPhoto;
-    }
-
     private static class GetChildren
             implements Func1<DataSnapshot, Iterable<DataSnapshot>> {
         @Override

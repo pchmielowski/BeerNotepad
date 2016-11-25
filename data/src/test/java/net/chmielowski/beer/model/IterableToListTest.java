@@ -18,14 +18,14 @@ import static org.junit.Assert.assertThat;
 public class IterableToListTest {
 
     FbPhotos mockedPhotos;
-    private FbReadBeers.StructBeer firstBeerAsStruct;
+    private StructBeer firstBeerAsStruct;
     private Beer firstBeerAsObject;
-    private FbReadBeers.StructBeer secondBeerAsStruct;
+    private StructBeer secondBeerAsStruct;
     private Beer secondBeerAsObject;
 
     @Before
     public void setUp() throws Exception {
-        firstBeerAsStruct = new FbReadBeers.StructBeer();
+        firstBeerAsStruct = new StructBeer();
         firstBeerAsStruct.mCountry = "country";
         firstBeerAsStruct.mName = "name";
 
@@ -33,7 +33,7 @@ public class IterableToListTest {
         firstBeerAsStruct.mStyle = "style";
         firstBeerAsObject = objectBeer(firstBeerAsStruct);
 
-        secondBeerAsStruct = new FbReadBeers.StructBeer();
+        secondBeerAsStruct = new StructBeer();
         secondBeerAsStruct.mCountry = "country2";
         secondBeerAsStruct.mName = "name2";
         secondBeerAsStruct.mRating = 4.4f;
@@ -44,7 +44,7 @@ public class IterableToListTest {
     }
 
     @NonNull
-    private Beer objectBeer(final FbReadBeers.StructBeer struct) {
+    private Beer objectBeer(final StructBeer struct) {
         return new Beer(
                 struct.mName,
                 struct.mCountry,
@@ -86,11 +86,11 @@ public class IterableToListTest {
 
     @NonNull
     private DataSnapshot mockedSnapshot(
-            final FbReadBeers.StructBeer structBeer) {
+            final StructBeer structBeer) {
         final DataSnapshot mock = Mockito.mock(
                 DataSnapshot.class);
         Mockito.when(mock.getValue(
-                (Class<FbReadBeers.StructBeer>) Mockito.any()))
+                (Class<StructBeer>) Mockito.any()))
                .thenReturn(structBeer);
         return mock;
     }
