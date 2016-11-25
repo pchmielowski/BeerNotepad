@@ -11,3 +11,4 @@
 - [x] Caching photos
 - [ ] Caching data
 - [ ] Demo mode (without login)
+- [ ] Unsubscribe Rx
