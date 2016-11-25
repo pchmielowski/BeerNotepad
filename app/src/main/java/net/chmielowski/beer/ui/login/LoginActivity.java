@@ -2,13 +2,8 @@ package net.chmielowski.beer.ui.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.Base64;
-import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -24,9 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import net.chmielowski.beer.BeerApplication;
 import net.chmielowski.beer.R;
 import net.chmielowski.beer.login.User;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import javax.inject.Inject;
 
@@ -50,28 +42,6 @@ public final class LoginActivity extends Activity {
                 user,
                 new StartBeersActivityAction(this)
         );
-
-// CHECKSTYLE:OFF
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "net.chmielowski.beer",
-                    PackageManager.GET_SIGNATURES
-            );
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d(
-                        "KeyHash:",
-                        Base64.encodeToString(md.digest(), Base64.DEFAULT)
-                );
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
-        }
-        // CHECKSTYLE:ON
-
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
