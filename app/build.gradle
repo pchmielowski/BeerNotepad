@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
 apply plugin: 'com.neenbedankt.android-apt'
+
+apply from: project.property("Beer.signing") + ".gradle";
+
 android {
     compileSdkVersion 25
     buildToolsVersion "24.0.2"
