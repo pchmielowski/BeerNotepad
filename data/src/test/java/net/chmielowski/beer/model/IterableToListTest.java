@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 
 public class IterableToListTest {
 
-    FbPhotos mockedPhotos;
+    Photos mockedPhotos;
     private StructBeer firstBeerAsStruct;
     private Beer firstBeerAsObject;
     private StructBeer secondBeerAsStruct;
@@ -40,7 +40,7 @@ public class IterableToListTest {
         secondBeerAsStruct.mStyle = "style2";
         secondBeerAsObject = objectBeer(secondBeerAsStruct);
 
-        mockedPhotos = Mockito.mock(FbPhotos.class);
+        mockedPhotos = Mockito.mock(Photos.class);
     }
 
     @NonNull
