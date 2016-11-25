@@ -3,7 +3,7 @@
 - [x] Register page
 - [ ] Facebook login
 - [ ] Better look
-- [ ] Google Play
+- [x] Google Play
 - [ ] Video + screenshots
 - [x] Logo
 - [x] Beers' picture
