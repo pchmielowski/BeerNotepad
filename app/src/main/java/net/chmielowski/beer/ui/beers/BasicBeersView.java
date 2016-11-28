@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Observable;
+import rx.exceptions.Exceptions;
 import rx.functions.Func1;
 import rx.subjects.BehaviorSubject;
 
@@ -80,7 +81,7 @@ final class BasicBeersView implements BeersView {
 
     @Override
     public void showError(final Throwable e) {
-        e.printStackTrace();
+        throw Exceptions.propagate(e);
     }
 
     private void configureBeerListView() {

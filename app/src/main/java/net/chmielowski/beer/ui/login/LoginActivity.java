@@ -61,7 +61,7 @@ public final class LoginActivity extends Activity {
 
                     @Override
                     public void onError(final FacebookException exception) {
-                        exception.printStackTrace();
+                        throw new Error(exception);
                     }
                 });
     }
