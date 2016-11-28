@@ -9,13 +9,13 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.subscriptions.CompositeSubscription;
 
-final class ChangeDataObserverAction
+final class ChangeSortingFunc
         implements Action1<Func1<List<Beer>, List<Beer>>> {
     private final Observable<List<Beer>> mBeersDataSource;
     private final ShowBeersAction mShowBeersAction; // TODO: just Action1
     private final CompositeSubscription mSubs = new CompositeSubscription();
 
-    ChangeDataObserverAction(final Observable<List<Beer>> subject,
+    ChangeSortingFunc(final Observable<List<Beer>> subject,
             final ShowBeersAction showBeers) {
         this.mBeersDataSource = subject;
         this.mShowBeersAction = showBeers;

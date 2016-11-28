@@ -13,13 +13,13 @@ class LogoutPresenter {
     public LogoutPresenter(
             final Observable<Void> logoutClicked, final User user,
             final Action1<Void> returnToLoginActivity,
-            final ChangeDataObserverAction changeDataObserverAction) {
+            final ChangeSortingFunc changeSortingFunc) {
         mCompositeSubscription.addAll(
                 logoutClicked.subscribe(
                         new Action1<Void>() {
                             @Override
                             public void call(final Void aVoid) {
-                                changeDataObserverAction.unsubscribe();
+                                changeSortingFunc.unsubscribe();
                                 user.logout();
                             }
                         }

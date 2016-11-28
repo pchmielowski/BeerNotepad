@@ -16,7 +16,7 @@ import rx.subjects.Subject;
 
 import static org.mockito.Mockito.times;
 
-public class ChangeDataObserverActionTest {
+public class ChangeSortingFuncTest {
 
     Subject<List<Beer>, List<Beer>>
             mockedEventSource = ReplaySubject.create();
@@ -45,7 +45,7 @@ public class ChangeDataObserverActionTest {
                 firstFunctionReturn);
         Mockito.when(secondMockedFunction.call(functionInput)).thenReturn(
                 secondFunctionReturn);
-        final ChangeDataObserverAction observer = new ChangeDataObserverAction(
+        final ChangeSortingFunc observer = new ChangeSortingFunc(
                 mockedEventSource, mockedAction);
 
         mockedEventSource.onNext(functionInput);

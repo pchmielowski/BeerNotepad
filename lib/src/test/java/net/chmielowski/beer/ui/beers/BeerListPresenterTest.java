@@ -79,7 +79,7 @@ public class BeerListPresenterTest {
     }
 
     private BeerListPresenter createBeersPresenter() {
-        return new BeerListPresenter(mockedView, new ChangeDataObserverAction(
+        return new BeerListPresenter(mockedView, new ChangeSortingFunc(
                 mockedBeers.list(),
                 new ShowBeersAction(mockedView)
         ));

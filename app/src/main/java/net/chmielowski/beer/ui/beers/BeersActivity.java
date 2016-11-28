@@ -34,14 +34,14 @@ public final class BeersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_beers);
         ((BeerApplication) getApplication()).cachedComponent().inject(this);
         final BasicBeersView view = new BasicBeersView(this);
-        final ChangeDataObserverAction changeDataObserverAction =
-                new ChangeDataObserverAction(
+        final ChangeSortingFunc changeSortingFunc =
+                new ChangeSortingFunc(
                         mBeers.list(),
                         new ShowBeersAction(view)
                 );
         new BeerListPresenter(
                 view,
-                changeDataObserverAction
+                changeSortingFunc
         );
         new FabPresenter(
                 view,
@@ -60,7 +60,7 @@ public final class BeersActivity extends AppCompatActivity {
                         finish();
                     }
                 },
-                changeDataObserverAction
+                changeSortingFunc
         );
     }
 
