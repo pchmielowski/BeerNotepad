@@ -43,7 +43,6 @@ public final class DgModule {
         return FirebaseStorage.getInstance();
     }
 
-    @Singleton// TODO: check if is necessary
     @Provides
     ReadBeers provideFireBaseBeers(final User user,
             final FirebaseStorage storage) {

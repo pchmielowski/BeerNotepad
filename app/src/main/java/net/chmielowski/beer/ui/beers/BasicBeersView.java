@@ -81,6 +81,7 @@ final class BasicBeersView implements BeersView {
 
     @Override
     public void showError(final Throwable e) {
+        e.printStackTrace();
         throw Exceptions.propagate(e);
     }
 

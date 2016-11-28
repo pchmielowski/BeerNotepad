@@ -12,12 +12,14 @@ class LogoutPresenter {
 
     public LogoutPresenter(
             final Observable<Void> logoutClicked, final User user,
-            final Action1<Void> returnToLoginActivity) {
+            final Action1<Void> returnToLoginActivity,
+            final ChangeDataObserverAction changeDataObserverAction) {
         mCompositeSubscription.addAll(
                 logoutClicked.subscribe(
                         new Action1<Void>() {
                             @Override
                             public void call(final Void aVoid) {
+                                changeDataObserverAction.unsubscribe();
                                 user.logout();
                             }
                         }
