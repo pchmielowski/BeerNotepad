@@ -34,24 +34,22 @@ public final class LoginActivity extends Activity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
         ((BeerApplication) getApplication()).cachedComponent().inject(this);
+        loginWithFireBase(AccessToken.getCurrentAccessToken());
         new LoginPresenter(
                 new BasicLoginView(this),
                 user,
                 new StartBeersActivityAction(this)
         );
-        if (isLoggedIn()) {
-            new StartBeersActivityAction(this);
-        }
-        mCallbackManager = CallbackManager.Factory.create();
         LoginButton loginButton = (LoginButton) findViewById(
                 R.id.login_btn_fblogin);
         loginButton.setReadPermissions("email");
 
+        mCallbackManager = CallbackManager.Factory.create();
         loginButton.registerCallback(
                 mCallbackManager, new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
-                        handleFacebookAccessToken(loginResult.getAccessToken());
+                        loginWithFireBase(loginResult.getAccessToken());
                     }
 
                     @Override
@@ -73,12 +71,8 @@ public final class LoginActivity extends Activity {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    public boolean isLoggedIn() {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        return accessToken != null;
-    }
-
-    private void handleFacebookAccessToken(final AccessToken token) {
+    private void loginWithFireBase(final AccessToken token) {
+        if (token == null) return;
         user.login(FacebookAuthProvider.getCredential(
                 token.getToken()))
             .map(new Func1<Boolean, Void>() {
