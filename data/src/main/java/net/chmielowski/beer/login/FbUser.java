@@ -2,6 +2,7 @@ package net.chmielowski.beer.login;
 
 import android.support.annotation.NonNull;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -16,9 +17,11 @@ import rx.subjects.PublishSubject;
 public final class FbUser implements User {
 
     private final FirebaseAuth mAuth;
+    private final LoginManager mFacebook;
 
-    public FbUser(final FirebaseAuth auth) {
+    public FbUser(final FirebaseAuth auth, final LoginManager facebook) {
         this.mAuth = auth;
+        this.mFacebook = facebook;
     }
 
     @Override
@@ -55,6 +58,7 @@ public final class FbUser implements User {
     @Override
     public void logout() {
         mAuth.signOut();
+        mFacebook.logOut();
     }
 
     private static class ResultObservable

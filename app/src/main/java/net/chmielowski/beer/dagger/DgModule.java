@@ -1,5 +1,6 @@
 package net.chmielowski.beer.dagger;
 
+import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,7 +35,7 @@ public final class DgModule {
     @Singleton // TODO: check if is necessary
     @Provides
     User provideFirebaseUser(final FirebaseAuth auth) {
-        return new FbUser(auth);
+        return new FbUser(auth, LoginManager.getInstance());
     }
 
     @Singleton

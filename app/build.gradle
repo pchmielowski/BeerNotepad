@@ -65,7 +65,7 @@ dependencies {
     compile "com.google.firebase:firebase-auth:${FIREBASE_VERSION}"
     compile 'com.kelvinapps:rxfirebase:0.0.15'
 
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.facebook.android:facebook-android-sdk:4.17.0'
 
     compile project(path: ':lib')
     compile project(path: ':data')
