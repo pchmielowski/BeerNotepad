@@ -59,6 +59,8 @@ public final class RegisterActivityTest {
                 .perform(replaceText(email));
         onView(withId(R.id.register_et_password))
                 .perform(replaceText(passwd));
+        onView(withId(R.id.register_et_password_rep))
+                .perform(replaceText(passwd));
         onView(withId(R.id.register_bt_register))
                 .perform(click());
 
