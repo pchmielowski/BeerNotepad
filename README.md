@@ -9,9 +9,12 @@ Allows user to create an account, log in and keep all information in a cloud ser
 <img src=graphics/add.png width=150 />
 <img src=graphics/photo.png width=150 />
 
+[Video of working application](https://www.youtube.com/watch?v=BpP4OdItgcw)
+
 ## Used technologies
 
 * **Firebase** as a user login service and a database
+* **Facebook SDK** for Facebook login
 * **Dagger2** for dependency injection
 * **Mockito**, **JUnit** and **Espresso** for tests (unit and instrumentation)
 * **Butterknife** for view injections
