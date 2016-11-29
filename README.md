@@ -3,9 +3,11 @@
 A simple Android application to keep information and rating of tasted beers.
 Allows user to create an account, log in and keep all information in a cloud service.
 
-<img src=graphics/Screenshot_20161124-155238.png width=150 />
-<img src=graphics/Screenshot_20161124-155320.png width=150 />
-<img src=graphics/Screenshot_20161124-155400.png width=150 />
+<img src=graphics/login.png width=150 />
+<img src=graphics/beers2.png width=150 />
+<img src=graphics/beers.png width=150 />
+<img src=graphics/add.png width=150 />
+<img src=graphics/photo.png width=150 />
 
 ## Used technologies
 
