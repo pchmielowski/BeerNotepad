@@ -30,6 +30,9 @@ Allows user to create an account, log in and keep all information in a cloud ser
 * Usage of MVP pattern
   * Lightweight `Activities` - view logic in separate `*View` classes
 * Almost all classes immutable (excluding Activities etc.)
-* Dagger2 dependency injection in `Activities` and Espresso tests, plain constructor injection in other classes
-* Screen-related packages: all `Activity`, `Adapter`, `View`, `Presenter` etc classes related with one screen in one package.
-This approach allow me to make more classes and methods package-private.
+* Dagger2 dependency injection in `Activities` and Espresso tests, plain old constructor injection in other classes
+* Screen-related packages. 
+  * In contrast to most popular approach of having packages like: `activities`, `adapters`, `views`,
+  in this application there are packages related to the screen: `login`, `register` etc. Each one contains classes like:
+  `Activity`, `Adapter`, `View`, `Presenter` related with one screen.
+  This approach allow me to make more classes and methods **package-private** instead of **public**.
